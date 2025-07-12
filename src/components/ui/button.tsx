@@ -53,11 +53,11 @@ function Button({
     iconLeft?: React.ReactNode
     iconRight?: React.ReactNode
   }) {
-  const Comp = asChild ? Slot : "button"
+  const Component = asChild ? Slot : "button"
 
 
   return (
-  <Comp
+  <Component
     data-slot="button"
     className={cn(buttonVariants({ variant, size, className }))}
     disabled={disabled || loading}
@@ -67,7 +67,7 @@ function Button({
       <span className="animate-spin h-4 w-4 border-2 border-t-transparent border-white rounded-full" />
     )}
     {children}
-  </Comp>
+  </Component>
 );
 
 }
