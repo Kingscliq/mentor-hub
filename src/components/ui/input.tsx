@@ -1,8 +1,7 @@
-
-
-import * as React from "react";
-import { cn } from "@/lib/utils";
-import { InputProps } from "@/types/components/input";
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { InputProps } from '@/types/components/input';
+import Box from '@/components/ui/box';
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
@@ -14,7 +13,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       iconRight,
       className,
       id,
-      type = "text",
+      type = 'text',
       ...props
     },
     ref
@@ -22,59 +21,69 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const generatedId = React.useId();
     const inputId = id ?? generatedId;
 
-
     return (
-      <div className="space-y-1">
+      <Box className="space-y-1">
         {label && (
-          <label
+          <Box
+            as="label"
             htmlFor={inputId}
             className="text-sm font-medium leading-none"
           >
             {label}
-          </label>
+          </Box>
         )}
 
-        <div className="relative">
+        <Box className="relative">
           {iconLeft && (
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+            <Box
+              as="span"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+            >
               {iconLeft}
-            </span>
+            </Box>
           )}
 
-          <input
+          <Box
+            as="input"
             id={inputId}
             ref={ref}
             type={type}
             data-slot="input"
             aria-invalid={!!error}
             className={cn(
-            "appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm",
-            iconLeft && "pl-10",
-            iconRight && "pr-10",
-            error && "border-red-500 focus:border-red-500 focus:ring-red-500",
-            className
+              'appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+              iconLeft && 'pl-10',
+              iconRight && 'pr-10',
+              error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
+              className
             )}
             {...props}
           />
 
           {iconRight && (
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+            <Box
+              as="span"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+            >
               {iconRight}
-            </span>
+            </Box>
           )}
-        </div>
+        </Box>
 
         {error ? (
-          <p className="text-sm text-red-500">{error}</p>
+          <Box as="p" className="text-sm text-red-500">
+            {error}
+          </Box>
         ) : helperText ? (
-          <p className="text-sm text-muted-foreground">{helperText}</p>
+          <Box as="p" className="text-sm text-muted-foreground">
+            {helperText}
+          </Box>
         ) : null}
-      </div>
+      </Box>
     );
   }
 );
 
-Input.displayName = "Input";
+Input.displayName = 'Input';
 
 export { Input };
-

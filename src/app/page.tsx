@@ -1,12 +1,15 @@
-import {Button} from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+'use client';
+import Box from '@/components/ui/box';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
     <>
-      <div>Hello World!</div>
+      <Box>Hello World!</Box>
       <Button> Click me</Button>
-      <Input ></Input>
+      <Box as="section" onClick={() => console.log('hello world')}>
+        Hello world{' '}
+      </Box>
     </>
   );
 }
