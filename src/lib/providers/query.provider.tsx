@@ -7,7 +7,7 @@ interface IAppQueryProviderProps {
   children: React.ReactNode;
 }
 
-const AppQueryProvider: React.FC<IAppQueryProviderProps> = ({
+export const AppProvider: React.FC<IAppQueryProviderProps> = ({
   children,
 }: IAppQueryProviderProps) => {
   const queryConfig = new QueryClient({
@@ -26,5 +26,3 @@ const AppQueryProvider: React.FC<IAppQueryProviderProps> = ({
     </AppStoreProvider>
   );
 };
-
-export default AppQueryProvider;
