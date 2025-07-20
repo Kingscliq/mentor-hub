@@ -142,7 +142,7 @@ export const OTPField = ({
       </InputOTP>
 
       {error && errorMessage && (
-        <Box className="text-destructive text-sm font-medium">
+        <Box className="text-destructive text-xs font-medium">
           {errorMessage}
         </Box>
       )}
