@@ -1,8 +1,8 @@
 
-export type Role = 'Mentor' | 'Mentee' | 'Admin';
+export type Role = 'mentor' | 'mentee';
 
 export interface RegisterFormValues {
-  role: Role ,
+  role: Role | '',
   firstName: string,
   lastName: string,
   phoneNumber: string,
