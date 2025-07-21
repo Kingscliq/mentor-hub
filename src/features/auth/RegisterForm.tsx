@@ -1,39 +1,35 @@
-
 'use client';
 
-import { useFormik} from "formik";
-import { registerValidationSchema } from "@/schema/register-schema";
-import { RegisterFormValues } from "@/types/features/auth";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { useFormik } from 'formik';
+import { registerValidationSchema } from '@/schema/register-schema';
+import { RegisterFormValues, Roles } from '@/types/features/auth';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Mail, Lock, Phone, User, GraduationCap } from "lucide-react";
-import Link from "next/link";
-import Box from "@/components/ui/box";
+} from '@/components/ui/select';
+import { Mail, Lock, Phone, User, GraduationCap } from 'lucide-react';
+import Link from 'next/link';
+import Box from '@/components/ui/box';
 
-import { useState } from "react"; 
-import { Eye, EyeOff } from "lucide-react"; // for toggle icons
-
-
-
+import { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react'; // for toggle icons
 
 const initialValues: RegisterFormValues = {
-  role: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  department: "",
-  matricNumber: "",
-  academicYear: "",
-  phoneNumber: "",
-  password: "",
-  confirmPassword: "",
+  role: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  department: '',
+  matricNumber: '',
+  academicYear: '',
+  phoneNumber: '',
+  password: '',
+  confirmPassword: '',
 };
 
 export default function Register() {
@@ -41,8 +37,8 @@ export default function Register() {
   const formik = useFormik({
     initialValues,
     validationSchema: registerValidationSchema,
-    onSubmit: (values) => {
-      console.log("Form submitted:", values);
+    onSubmit: values => {
+      console.log('Form submitted:', values);
     },
   });
 
@@ -59,20 +55,27 @@ export default function Register() {
   return (
     <Box as="section" className="min-h-screen bg-white py-10 px-4">
       <Box as="div" className="max-w-md mx-auto p-12 shadow-lg rounded-xl">
-        <Box as = "form" onSubmit={handleSubmit} className="space-y-4">
+        <Box as="form" onSubmit={handleSubmit} className="space-y-4">
           {/* Role Select */}
-          <Box as = 'div'>
-            <Box as = 'label' htmlFor="role" className="text-sm font-medium text-gray-600 block mb-1">
+          <Box as="div">
+            <Box
+              as="label"
+              htmlFor="role"
+              className="text-sm font-medium text-gray-600 block mb-1"
+            >
               Role
             </Box>
+            {/* TODO: we need to abstract <Select> component into a single component that accepts options[] as props as well as other props like error etc */}
             <Select
               value={values.role}
-              onValueChange={(val) => setFieldValue("role", val)}
+              onValueChange={val => setFieldValue('role', val)}
             >
               <SelectTrigger
                 id="role"
                 className={`mt-1 w-full rounded-md border ${
-                  errors.role && touched.role ? "border-red-500" : "border-gray-300"
+                  errors.role && touched.role
+                    ? 'border-red-500'
+                    : 'border-gray-300'
                 } bg-white py-2 px-3 text-sm shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500`}
               >
                 <SelectValue placeholder="Choose a role" />
@@ -95,7 +98,11 @@ export default function Register() {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="Your First Name"
-            error={touched.firstName && errors.firstName ? String(errors.firstName) : undefined}
+            error={
+              touched.firstName && errors.firstName
+                ? String(errors.firstName)
+                : undefined
+            }
           />
 
           <Input
@@ -106,7 +113,11 @@ export default function Register() {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="Your Last Name"
-            error={touched.lastName && errors.lastName ? String(errors.lastName) : undefined}
+            error={
+              touched.lastName && errors.lastName
+                ? String(errors.lastName)
+                : undefined
+            }
           />
 
           <Input
@@ -118,7 +129,9 @@ export default function Register() {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="Your email address"
-            error={touched.email && errors.email ? String(errors.email) : undefined}
+            error={
+              touched.email && errors.email ? String(errors.email) : undefined
+            }
           />
 
           <Input
@@ -129,11 +142,15 @@ export default function Register() {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="Your Department"
-            error={touched.department && errors.department ? String(errors.department) : undefined}
+            error={
+              touched.department && errors.department
+                ? String(errors.department)
+                : undefined
+            }
           />
 
           {/* Only show if mentee */}
-          {values.role === "mentee" && (
+          {values.role === Roles.MENTEE && (
             <>
               <Input
                 label="Matric Number"
@@ -183,26 +200,33 @@ export default function Register() {
           />
 
           <Input
-              label="Password"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              iconLeft={<Lock className="w-4 h-4 " />}
-              iconRight={(
-                <Button 
-                  type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className=" icon bg-white hover:bg-white text-gray-500 hover:text-gray-700 focus:outline-none"
-                >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </Button>
-              )}
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              placeholder="Your Password"
-              error={touched.password && errors.password ? String(errors.password) : undefined}
+            label="Password"
+            name="password"
+            type={showPassword ? 'text' : 'password'}
+            iconLeft={<Lock className="w-4 h-4 " />}
+            iconRight={
+              <Button
+                type="button"
+                onClick={() => setShowPassword(prev => !prev)}
+                className=" icon text-gray-500 hover:text-gray-700 focus:outline-none"
+              >
+                {showPassword ? (
+                  <EyeOff className="w-4 h-4" />
+                ) : (
+                  <Eye className="w-4 h-4" />
+                )}
+              </Button>
+            }
+            value={values.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="Your Password"
+            error={
+              touched.password && errors.password
+                ? String(errors.password)
+                : undefined
+            }
           />
-
 
           <Input
             label="Confirm Password"
@@ -228,10 +252,13 @@ export default function Register() {
           </Button>
         </Box>
 
-        <Box as = "div" className="mt-6 text-center">
-          <Box as = 'p' className="text-sm text-gray-600">
-            Already have an account?{" "}
-            <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500">
+        <Box as="div" className="mt-6 text-center">
+          <Box as="p" className="text-sm text-gray-600">
+            Already have an account?{' '}
+            <Link
+              href="/login"
+              className="font-medium text-blue-600 hover:text-blue-500"
+            >
               Sign in here
             </Link>
           </Box>
