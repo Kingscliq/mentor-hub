@@ -1,4 +1,5 @@
-import store from "./store";
+import { store } from "@/redux/store";
+
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
