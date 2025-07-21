@@ -5,13 +5,7 @@ import { registerValidationSchema } from '@/schema/register-schema';
 import { RegisterFormValues, Roles } from '@/types/features/auth';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Select } from '@/components/ui/select';
 import { Mail, Lock, Phone, User, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
 import Box from '@/components/ui/box';
@@ -29,7 +23,6 @@ const initialValues: RegisterFormValues = {
   academicYear: '',
   phoneNumber: '',
   password: '',
-  confirmPassword: '',
 };
 
 export default function Register() {
@@ -68,23 +61,13 @@ export default function Register() {
             {/* TODO: we need to abstract <Select> component into a single component that accepts options[] as props as well as other props like error etc */}
             <Select
               value={values.role}
-              onValueChange={val => setFieldValue('role', val)}
-            >
-              <SelectTrigger
-                id="role"
-                className={`mt-1 w-full rounded-md border ${
-                  errors.role && touched.role
-                    ? 'border-red-500'
-                    : 'border-gray-300'
-                } bg-white py-2 px-3 text-sm shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500`}
-              >
-                <SelectValue placeholder="Choose a role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="mentor">Mentor</SelectItem>
-                <SelectItem value="mentee">Mentee</SelectItem>
-              </SelectContent>
-            </Select>
+              onChange={value => setFieldValue('role', value)}
+              options={[
+                { value: Roles.MENTOR, label: 'Mentor' },
+                { value: Roles.MENTEE, label: 'Mentee' },
+              ]}
+              placeholder="Choose a role"
+            ></Select>
             {touched.role && errors.role && (
               <p className="text-sm text-red-500 mt-1">{errors.role}</p>
             )}
@@ -186,7 +169,7 @@ export default function Register() {
           <Input
             label="Phone Number"
             name="phoneNumber"
-            type="tel"
+            type="number"
             iconLeft={<Phone className="w-4 h-4" />}
             value={values.phoneNumber}
             onChange={handleChange}
@@ -208,7 +191,7 @@ export default function Register() {
               <Button
                 type="button"
                 onClick={() => setShowPassword(prev => !prev)}
-                className=" icon text-gray-500 hover:text-gray-700 focus:outline-none"
+                className="bg-transparent text-gray-400 hover:bg-transparent cursor-pointer"
               >
                 {showPassword ? (
                   <EyeOff className="w-4 h-4" />
@@ -224,22 +207,6 @@ export default function Register() {
             error={
               touched.password && errors.password
                 ? String(errors.password)
-                : undefined
-            }
-          />
-
-          <Input
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-            iconLeft={<Lock className="w-4 h-4" />}
-            value={values.confirmPassword}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder="Confirm Password"
-            error={
-              touched.confirmPassword && errors.confirmPassword
-                ? String(errors.confirmPassword)
                 : undefined
             }
           />

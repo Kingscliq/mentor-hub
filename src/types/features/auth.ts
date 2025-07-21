@@ -10,7 +10,6 @@ export interface RegisterFormValues {
   matricNumber: string;
   academicYear: string;
   password: string;
-  confirmPassword: string;
 }
 
 export enum Roles {

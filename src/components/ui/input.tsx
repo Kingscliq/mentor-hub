@@ -71,11 +71,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         </Box>
 
         {error ? (
-          <Box as="p" className="text-sm text-red-500">
+          <Box as="p" className="text-xs text-red-500">
             {error}
           </Box>
         ) : helperText ? (
-          <Box as="p" className="text-sm text-muted-foreground">
+          <Box as="p" className="text-xs text-muted-foreground">
             {helperText}
           </Box>
         ) : null}
