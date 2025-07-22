@@ -24,3 +24,5 @@ export const registerValidationSchema = Yup.object({
   }),
   password: Yup.string().min(6, 'Too short').required('Password is Required'),
 });
+
+

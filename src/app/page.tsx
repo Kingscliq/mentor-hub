@@ -1,6 +1,7 @@
 'use client';
 import Box from '@/components/ui/box';
 import { Button } from '@/components/ui/button';
+import LoginForm from '@/features/auth/LoginForm';
 import RegisterForm from '@/features/auth/RegisterForm';
 import { Logger } from '@/lib';
 import { toast } from 'sonner';
@@ -20,6 +21,7 @@ export default function Home() {
         Hello world{' '}
       </Box>
       <RegisterForm></RegisterForm>
+      <LoginForm></LoginForm>
     </>
   );
 }

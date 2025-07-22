@@ -16,3 +16,8 @@ export enum Roles {
   MENTOR = 'mentor',
   MENTEE = 'mentee',
 }
+
+export type LoginFormValues = {
+  email: string;
+  password: string;
+};
