@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Box from '@/components/ui/box';
-import {loginSchema} from '@/schema/login-schema'
+import {loginSchema} from '@/schema/auth/login.schema'
 import { LoginFormValues} from '@/types/features/auth';
 import Link from 'next/link';
 import { Eye, EyeOff, Mail, Lock} from 'lucide-react';
