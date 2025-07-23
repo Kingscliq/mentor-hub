@@ -1,8 +1,8 @@
 'use client';
 import Box from '@/components/ui/box';
 import { Button } from '@/components/ui/button';
-import LoginForm from '@/features/auth/LoginForm';
-import RegisterForm from '@/features/auth/RegisterForm';
+import LoginForm from '@/features/auth/login-form';
+import RegisterForm from '@/features/auth/register-form';
 import { Logger } from '@/lib';
 import { toast } from 'sonner';
 
