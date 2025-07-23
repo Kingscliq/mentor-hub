@@ -27,7 +27,7 @@ const VerifyEmail = () => {
       <Box as="div" className="max-w-md mx-auto p-12 shadow-lg rounded-xl">
         <Box as="form" onSubmit={handleSubmit} className="space-y-4">
           <Box as="h2" className="text-lg font-bold text-center">
-            Check Your Email
+            Email Verification
           </Box>
           <Box as="p" className="text-xs text-center">
             We sent a code to anyavictor@gmail.com{' '}
