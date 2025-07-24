@@ -111,14 +111,14 @@ const Dashboard = () => {
     ],
   };
 
-  const getStatsForRole = () => statsByRole[user?.role] || [];
+  const getStatsForRole = () => statsByRole[user?.role] ?? [];
 
   const stats = getStatsForRole();
   return (
     <Box as="section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Box as="section" className="mb-8">
         <Box as="h1" className="text-3xl font-bold text-gray-900">
-          Welcome back, {user?.name}!
+          Welcome back, {user?.name ?? 'N/A'}!
         </Box>
         <Box as="p" className="mt-2 text-gray-600">
           Here's what's happening in your mentorship journey.
