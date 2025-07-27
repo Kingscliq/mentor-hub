@@ -66,7 +66,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   return (
     <AvatarContainer className={className}>
       <AvatarImage src={src} alt={alt} />
-      <AvatarFallback>{fallBack}</AvatarFallback>
+      <AvatarFallback>{fallBack ?? 'M'}</AvatarFallback>
     </AvatarContainer>
   );
 };

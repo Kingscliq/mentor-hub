@@ -8,7 +8,11 @@ interface GroupCardProps {
   profileUrl: string;
   role: string;
 }
-const GroupCard: React.FC<GroupCardProps> = ({ name, profileUrl, role }) => {
+export const GroupCard: React.FC<GroupCardProps> = ({
+  name,
+  profileUrl,
+  role,
+}) => {
   const fallback = typeof name === 'string' && name.length > 0 ? name[0] : '';
   return (
     <Card>
@@ -31,5 +35,3 @@ const GroupCard: React.FC<GroupCardProps> = ({ name, profileUrl, role }) => {
     </Card>
   );
 };
-
-export default GroupCard;

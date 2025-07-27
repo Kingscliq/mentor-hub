@@ -2,10 +2,15 @@
 
 import Box from '@/components/ui/box';
 import { Button } from '@/components/ui/button';
-import { Groups, GroupSlider, mockGroups } from '@/features';
+import {
+  GroupCard,
+  Groups,
+  GroupSlider,
+  mockGroups,
+  UserProfileCard,
+} from '@/features';
 import LoginForm from '@/features/auth/login-form';
 import RegisterForm from '@/features/auth/register-form';
-import GroupCard from '@/features/dashboard/components/group-card';
 
 import { Logger } from '@/lib';
 import { toast } from 'sonner';
@@ -30,6 +35,13 @@ export default function Home() {
       <LoginForm />
       <Groups groups={mockGroups} />
       <GroupCard name="Group 1" profileUrl="/path/to/image.jpg" role="Admin" />
+      <UserProfileCard
+        name="Mekus Malam"
+        profileUrl={'hhts://sdjfjkdhjkdvh.com'}
+        email={'mekus@gmail.com'}
+        phone={'08078767762'}
+        department={'Computer Science '}
+      />
     </>
   );
 }
