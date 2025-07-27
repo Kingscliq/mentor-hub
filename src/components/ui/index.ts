@@ -5,3 +5,4 @@ export * from './box';
 export * from './slider';
 export * from './select';
 export * from './progress';
+export * from './avatar';
