@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormik } from 'formik';
-import { registerValidationSchema } from '@/schema/register-schema';
+import { registerValidationSchema } from '@/schema/auth/register.schema';
 import { RegisterFormValues, Roles } from '@/types/features/auth';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -69,7 +69,9 @@ export default function Register() {
               placeholder="Choose a role"
             ></Select>
             {touched.role && errors.role && (
-              <p className="text-sm text-red-500 mt-1">{errors.role}</p>
+              <Box as="p" className="text-sm text-red-500 mt-1">
+                {errors.role}
+              </Box>
             )}
           </Box>
 

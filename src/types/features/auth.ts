@@ -21,3 +21,7 @@ export type LoginFormValues = {
   email: string;
   password: string;
 };
+
+export interface VerifyEmailValues {
+  pin: string;
+}
