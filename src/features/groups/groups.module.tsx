@@ -7,7 +7,7 @@ import { ChevronLeft } from 'lucide-react';
 import { user1 } from '../../../public/images';
 import MiniProfileCard from './components/mini-profile';
 import MainProfile from './components/main-profile';
-import { GroupModulesI, GroupsDetailsI } from '@/types/features/groups';
+import { GroupsDetailsI } from '@/types/features/groups';
 
 // Will be removed when api is ready
 export const groupsData: Record<string, GroupsDetailsI[]> = {
@@ -125,7 +125,7 @@ export const groupsData: Record<string, GroupsDetailsI[]> = {
   ],
 };
 
-const GroupModules: React.FC<GroupModulesI> = () => {
+const GroupModules: React.FC = () => {
   const [selectedUser, setSelectedUser] = useState<GroupsDetailsI['mentor']>();
   const searchParams = useSearchParams();
   const projectTitle = searchParams.get('projectTitle');
