@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo } from 'react';
 import {
   BookOpen,
@@ -10,11 +12,14 @@ import {
 } from 'lucide-react';
 import { StatCard } from '@/features';
 import Box from '@/components/ui/box';
+import { RecentActivityList } from "../dashboard/widgets/recent-activity-lists";
+import { RecentProjects } from "../dashboard/widgets/recent-projects";
+import { QuickActions } from "../dashboard/components/quick-actions";
 
 export const user = {
   id: 1,
   name: 'John Doe',
-  role: 'mentor',
+  role: 'mentee',
 };
 
 export const DashboardModule = () => {
@@ -23,7 +28,7 @@ export const DashboardModule = () => {
     return {
       id: 1,
       name: 'John Doe',
-      role: 'mentor',
+      role: 'mentee',
     };
   }, []);
 
@@ -131,7 +136,7 @@ export const DashboardModule = () => {
       </Box>
 
       {/* Stats Overview */}
-      <Box
+       <Box
         as="section"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
       >
@@ -147,7 +152,18 @@ export const DashboardModule = () => {
             />
           );
         })}
+       </Box>
+
+       {/* Recent Projects & Recent Activity */}
+        <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <RecentProjects />
+          <RecentActivityList />
+        </Box>
+      {/* Quick Actions */}
+      <Box as="section" className="mt-8">
+          <QuickActions />
       </Box>
+
     </Box>
   );
 };

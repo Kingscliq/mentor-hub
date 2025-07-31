@@ -1,5 +1,6 @@
 import React, { ElementType, JSX } from 'react';
 
+// extends ElementType shows that the generic type is now constrained to Elements like "div", "p" tags
 type BoxProps<C extends ElementType> = {
   as?: C;
 } & Omit<React.ComponentProps<C>, 'as'>;
