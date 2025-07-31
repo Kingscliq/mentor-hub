@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-export interface GroupModulesI {}
+// export interface GroupModulesI {}
 
 export interface GroupsDetailsI {
     _id: string;
