@@ -14,7 +14,7 @@ export default function Dashboard({
   children: React.ReactNode;
 }>) {
   return (
-    <Box as="section" lang="en">
+    <Box as="section" lang="en" className='bg-[#FAFAFA]'>
       <Header />
       {children}
     </Box>
