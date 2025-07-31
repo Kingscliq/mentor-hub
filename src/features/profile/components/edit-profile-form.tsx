@@ -1,24 +1,14 @@
-
 'use client';
 
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import Box from '@/components/ui/box';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-
-const validationSchema = Yup.object({
-  firstName: Yup.string().required('First name is required'),
-  lastName: Yup.string().required('Last name is required'),
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  department: Yup.string().required('Department is required'),
-  matricNumber: Yup.string().required('Matric number is required'),
-  phone: Yup.string().required('Phone number is required'),
-  academicYear: Yup.string().required('Academic year is required'),
-});
+import { profileValidationSchema } from '@/schema/dashboard';
 
 const EditProfilePage = () => {
+  // TODO: prepopulate with user data fetched from the server
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -29,33 +19,35 @@ const EditProfilePage = () => {
       phone: '',
       academicYear: '',
     },
-    validationSchema,
-    onSubmit: (values) => {
+    validationSchema: profileValidationSchema,
+    onSubmit: values => {
       console.log('Profile updated:', values);
     },
   });
 
-  const {
-    values,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    touched,
-    errors,
-  } = formik;
+  const { values, handleChange, handleBlur, handleSubmit, touched, errors } =
+    formik;
 
   return (
-    <Box as="div" className="min-h-screen flex items-center justify-center bg-gray-100 py-10 w-full px-4">
+    <Box
+      as="div"
+      className="min-h-screen flex items-center justify-center bg-gray-100 py-10 w-full px-4"
+    >
       <Box
         as="form"
         onSubmit={handleSubmit}
         className="bg-white p-6 md:p-10 rounded-xl shadow-md w-full max-w-3xl mx-auto"
       >
-        <h2 className="text-xl font-semibold mb-8">Add information about yourself</h2>
+        <Box as="h2" className="text-xl font-semibold mb-8">
+          Add information about yourself
+        </Box>
 
         <Box as="div" className="flex flex-col md:flex-row md:gap-x-8 gap-y-8">
           {/* Profile Image Section */}
-          <Box as="div" className="flex flex-col items-center md:items-start md:w-1/4 w-full">
+          <Box
+            as="div"
+            className="flex flex-col items-center md:items-start md:w-1/4 w-full"
+          >
             <Image
               src="/profile.jfif"
               alt="Profile Picture"
@@ -80,7 +72,11 @@ const EditProfilePage = () => {
               value={values.firstName}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.firstName && errors.firstName ? errors.firstName : undefined}
+              error={
+                touched.firstName && errors.firstName
+                  ? errors.firstName
+                  : undefined
+              }
             />
             <Input
               name="lastName"
@@ -89,7 +85,11 @@ const EditProfilePage = () => {
               value={values.lastName}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.lastName && errors.lastName ? errors.lastName : undefined}
+              error={
+                touched.lastName && errors.lastName
+                  ? errors.lastName
+                  : undefined
+              }
             />
             <Input
               name="email"
@@ -107,7 +107,11 @@ const EditProfilePage = () => {
               value={values.department}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.department && errors.department ? errors.department : undefined}
+              error={
+                touched.department && errors.department
+                  ? errors.department
+                  : undefined
+              }
             />
             <Input
               name="matricNumber"
@@ -148,11 +152,17 @@ const EditProfilePage = () => {
         </Box>
 
         {/* Action Buttons */}
-        <Box as="div" className="flex flex-col md:flex-row justify-between gap-4 mt-10">
+        <Box
+          as="div"
+          className="flex flex-col md:flex-row justify-between gap-4 mt-10"
+        >
           <Button type="button" variant="outline" className="w-full md:w-auto">
             Cancel
           </Button>
-          <Button type="submit" className="w-full md:w-auto bg-blue-600 text-white">
+          <Button
+            type="submit"
+            className="w-full md:w-auto bg-blue-600 text-white"
+          >
             Save Changes
           </Button>
         </Box>
