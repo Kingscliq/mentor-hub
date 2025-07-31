@@ -33,7 +33,7 @@ const MainProfile: React.FC<MainProfileI> = ({ selectedUser }) => {
         </Box>
         <Box>
           <Box as="h1" className="text-2xl font-bold text-black mt-3">
-            {selectedUser?.name}
+            {selectedUser?.name ?? "-"}
           </Box>
         </Box>
       </Box>
