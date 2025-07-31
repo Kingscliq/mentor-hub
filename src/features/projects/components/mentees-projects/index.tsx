@@ -1,0 +1,83 @@
+"use client";
+
+import { Badge } from "@/components/ui/badge";
+import Box from "@/components/ui/box";
+import { Card } from "@/components/ui/card";
+import {
+  greencheck,
+  greyoutline,
+  orangeoutline,
+} from "../../../../../public/icons";
+import Image, { StaticImageData } from "next/image";
+import { MenteeProjectsDataI } from "../../projects.module";
+import { useState } from "react";
+
+const statusicons: Record<string, StaticImageData> = {
+  completed: greencheck,
+  "in progress": orangeoutline,
+  "to-do": greyoutline,
+};
+export interface MenteesProjectsProps {
+  projects: MenteeProjectsDataI[];
+}
+const MenteesProjects: React.FC<MenteesProjectsProps> = ({ projects }) => {
+  const [selectedProject, setSelectedProject] = useState<MenteeProjectsDataI>(projects[0]);
+  return (
+    <Box as="section">
+      {/* project approval */}
+      <Card className="bg-white rounded-md py-6 px-4">
+        <Box as="h1" className="text-xl font-bold">
+          Project Topic Approval
+        </Box>
+
+        <Box className="mt-4 flex flex-col gap-y-3">
+          {projects.map((item) => (
+            <Card
+              key={item._id}
+              onClick={() => setSelectedProject(item)}
+              className="p-0"
+              data-aos="fade-up"
+            >
+              <Box
+                as="div"
+                className="flex justify-between items-center text-black rounded-xl py-8 px-2 bg-[#FAFAFA]"
+              >
+                <Box className="font-bold pl-4">{item.topic}</Box>
+                <Badge variant="approved" className="capitalize">
+                  {item.status}
+                </Badge>
+              </Box>
+            </Card>
+          ))}
+        </Box>
+      </Card>
+
+      {/* project milestone */}
+      <Box className="mt-10">
+        <Card className="bg-white rounded-md py-6 px-4">
+          <Box as="h1" className="text-xl font-bold">
+            Project Milestone
+          </Box>
+          <Box className="mt-4 flex flex-col gap-y-3">
+            {selectedProject?.milestone?.map((item) => (
+              <Card key={item._id} className="p-0" data-aos="fade-up">
+                <Box
+                  as="div"
+                  className="flex justify-between items-center text-black rounded-xl py-6 px-2 bg-[#FAFAFA]"
+                >
+                  <Box as="div" className="flex items-center gap-x-3 pl-4">
+                    <Image src={statusicons[`${item.status}`]} alt="icons" />
+                    <Box className="font-bold">Chapter {item.chapter} : {item.title}</Box>
+                  </Box>
+                  <Badge variant={item.status as "default"}>{item.status}</Badge>
+                </Box>
+              </Card>
+            ))}
+          </Box>
+        </Card>
+      </Box>
+    </Box>
+  );
+};
+
+export default MenteesProjects;

@@ -1,0 +1,97 @@
+'use client'
+
+import Box from "@/components/ui/box"
+import { ChevronLeft, Plus } from "lucide-react"
+import { user } from "../dashboard"
+import { Button } from "@/components/ui"
+import EmptyProject from "./widgets/empty-project"
+import MenteesProjects from "./components/mentees-projects"
+import MentorsProject from "./components/mentors-projects"
+
+export interface MenteeProjectsDataI{
+_id:string;
+topic:string;
+status:string;
+milestone:{
+    _id:string
+    chapter:string;
+    title:string;
+    status:string;
+}[]
+}
+export const MenteeProjects:MenteeProjectsDataI[] = [
+  {
+    _id:'3232',
+    topic:'AI Research',
+    status:'approved',
+    milestone:[
+        {
+          _id:'jdjjs',
+          chapter:'1',
+          title:"introduction",
+          status:'completed'
+        },
+        {
+            chapter:'2',
+            title:"literature review",
+            status:'in progress',
+            _id:'kjkk',
+        },
+        {
+            _id:'kjjj',
+            chapter:'3',
+            title:"methodology",
+            status:'to-do'
+        },
+        {
+            _id:'kjjjddd',
+            chapter:'4',
+            title:"Review",
+            status:'to-do'
+        }
+    ]
+  }
+]
+
+export const MentorProjects= [
+
+]
+
+
+const ProjectsModules = () => {
+    const loggedUser = user
+    const AllProjects = loggedUser.role === "mentee" ? MenteeProjects : MentorProjects 
+  return (
+    <Box as="main" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Box as="a" href="/dashboard" className="hover:bg-[#dedbdb] rounded-full size-10 justify-center flex flex-col items-center">
+        <ChevronLeft />
+        </Box>
+        <Box className="mt-10">
+                {
+                  <Box as="h1" className="text-3xl font-bold">
+                    Projects
+                  </Box>
+                }
+        </Box>
+
+        <Box as="section" className="mt-10 md:mt-20">
+          {loggedUser.role === 'mentee' &&  <Button className="flex ml-auto cursor-pointer"> <Plus/> Add Project</Button>}
+
+           <Box className="mt-5">
+              {
+               AllProjects.length === 0 ? (
+                <EmptyProject onAdd={() => {}}/>
+               ):(
+                <Box>
+                  {loggedUser.role === 'mentee' ? <MenteesProjects projects={AllProjects}/> : <MentorsProject/>}
+                </Box>
+               )
+              } 
+           </Box>
+        </Box>
+    </Box>
+
+  )
+}
+
+export default ProjectsModules
