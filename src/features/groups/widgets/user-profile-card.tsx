@@ -1,48 +1,52 @@
-import Box from '@/components/ui/box'
-import { Card } from '@/components/ui/card'
-import Image from 'next/image'
-import React from 'react'
-import { user1 } from '../../../../public/images'
+import Box from '@/components/ui/box';
+import { Card } from '@/components/ui/card';
+import Image from 'next/image';
+import React from 'react';
+import { user1 } from '../../../../public';
 
-
-interface UserProfileCardI{
-    name:string;
-    userType:string;
-    photo?:string
-    active?:boolean
-    onClick:() => void
+interface UserProfileCardI {
+  name: string;
+  userType: string;
+  photo?: string;
+  active?: boolean;
+  onClick: () => void;
 }
 
-const UserProfileCard:React.FC<UserProfileCardI> = ({name,userType,photo,active, onClick}) => {
+const UserProfileCard: React.FC<UserProfileCardI> = ({
+  name,
+  userType,
+  photo,
+  active,
+  onClick,
+}) => {
   return (
-    <Card onClick={onClick} className={`${ active ? "bg-[#EBF3FC]" : "bg-white"} hover:bg-[#EBF3FC] cursor-pointer transition-all duration-500 ease-in-out`}>
-    <Box
-      as="div"
-      className={`px-3  py-4 flex items-center gap-x-5`}
+    <Card
+      onClick={onClick}
+      className={`${
+        active ? 'bg-[#EBF3FC]' : 'bg-white'
+      } hover:bg-[#EBF3FC] cursor-pointer transition-all duration-500 ease-in-out`}
     >
-      <Box as="div">
-        <Image
-          src={photo || user1}
-          alt=""
-          width={50}
-          height={50}
-          className="rounded-full"
-        />
-      </Box>
-      <Box>
-        <Box as="h1" className="text-2xl font-bold text-black">
-          {name}
+      <Box as="div" className={`px-3  py-4 flex items-center gap-x-5`}>
+        <Box as="div">
+          <Image
+            src={photo || user1}
+            alt=""
+            width={50}
+            height={50}
+            className="rounded-full"
+          />
         </Box>
-        <Box
-          as="p"
-          className="text-sm font-normal text-gray-400"
-        >
-          {userType}
+        <Box>
+          <Box as="h1" className="text-2xl font-bold text-black">
+            {name}
+          </Box>
+          <Box as="p" className="text-sm font-normal text-gray-400">
+            {userType}
+          </Box>
         </Box>
       </Box>
-    </Box>
-  </Card>
-  )
-}
+    </Card>
+  );
+};
 
-export default UserProfileCard
+export default UserProfileCard;
