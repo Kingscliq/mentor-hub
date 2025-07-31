@@ -36,7 +36,7 @@ const MiniProfileCard:React.FC<MiniProfileCardI> = ({loggedUser, viewGroups, get
             {item?.mentees?.map((item) => (
               // cards
               <Box as="div" key={item._id} data-aos="fade-up">
-                <UserProfileCard onClick={() => getUser(item)} active={selectedUserId === item?._id}  name={item?.name} userType={item?.userType}/>
+                <UserProfileCard onClick={() => getUser(item)} active={selectedUserId === item?._id}  name={item?.name ?? "-"} userType={item?.userType ?? "-}/>
               </Box>
             ))}
           </Box>
