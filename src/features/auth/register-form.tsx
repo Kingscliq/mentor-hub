@@ -64,8 +64,8 @@ export default function Register() {
               value={values.role}
               onChange={value => setFieldValue('role', value)}
               options={[
-                { value: Roles.MENTOR, label: 'Mentor' },
-                { value: Roles.MENTEE, label: 'Mentee' },
+                { value: Roles.SUPERVISOR, label: 'Supervisor' },
+                { value: Roles.STUDENT, label: 'Student' },
               ]}
               placeholder="Choose a role"
             ></Select>
@@ -136,7 +136,7 @@ export default function Register() {
           />
 
           {/* Only show if mentee */}
-          {values.role === Roles.MENTEE && (
+          {values.role === Roles.STUDENT && (
             <>
               <Input
                 label="Matric Number"

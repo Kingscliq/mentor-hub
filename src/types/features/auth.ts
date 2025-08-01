@@ -1,4 +1,6 @@
-export type Role = 'mentor' | 'mentee';
+export type Role = 'student' | 'supervisor' | 'admin';
+
+export const roles = ['student', 'supervisor', 'admin'];
 
 export interface RegisterFormValues {
   role: Role | '';
@@ -13,8 +15,8 @@ export interface RegisterFormValues {
 }
 
 export enum Roles {
-  MENTOR = 'mentor',
-  MENTEE = 'mentee',
+  STUDENT = 'student',
+  SUPERVISOR = 'supervisor',
 }
 
 export type LoginFormValues = {
