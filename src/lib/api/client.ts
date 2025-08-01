@@ -7,7 +7,8 @@ const defaultConfig = {
 };
 
 const parseToken = (config: InternalAxiosRequestConfig) => {
-  const regex = /^\/(login)?$/;
+  // Match root, /login, or /register
+  const regex = /^\/(login|register)?$/;
   if (!regex.test(config.url as string)) {
     if (config.headers) {
       config.headers.Authorization = `Bearer ${getAuthToken()}`;

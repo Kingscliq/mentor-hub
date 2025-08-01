@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import Box from "@/components/ui/box";
-import { ChevronLeft, Plus } from "lucide-react";
-import { user } from "../dashboard";
-import { Button } from "@/components/ui";
-import EmptyProject from "./widgets/empty-project";
-import MenteesProjects from "./components/mentees-projects";
-import MentorsProject from "./components/mentors-projects";
-import { useState } from "react";
-import MainModal from "@/components/modals";
-import AddProjectForm from "./widgets/add-project-form";
-import ApproveProjectForm from "./widgets/project-approval-form";
+import Box from '@/components/ui/box';
+import { ChevronLeft, Plus } from 'lucide-react';
+import { user } from '../dashboard';
+import { Button } from '@/components/ui';
+import EmptyProject from './widgets/empty-project';
+import MenteesProjects from './components/mentees-projects';
+import MentorsProject from './components/mentors-projects';
+import { useState } from 'react';
+import MainModal from '@/components/modals';
+import AddProjectForm from './widgets/add-project-form';
+import ApproveProjectForm from './widgets/project-approval-form';
 
 export interface MenteeProjectsDataI {
   _id: string;
@@ -25,33 +25,33 @@ export interface MenteeProjectsDataI {
 }
 export const MenteeProjects: MenteeProjectsDataI[] = [
   {
-    _id: "3232",
-    topic: "AI Research",
-    status: "approved",
+    _id: '3232',
+    topic: 'AI Research',
+    status: 'approved',
     milestone: [
       {
-        _id: "jdjjs",
-        chapter: "1",
-        title: "introduction",
-        status: "completed",
+        _id: 'jdjjs',
+        chapter: '1',
+        title: 'introduction',
+        status: 'completed',
       },
       {
-        chapter: "2",
-        title: "literature review",
-        status: "in progress",
-        _id: "kjkk",
+        chapter: '2',
+        title: 'literature review',
+        status: 'in progress',
+        _id: 'kjkk',
       },
       {
-        _id: "kjjj",
-        chapter: "3",
-        title: "methodology",
-        status: "to-do",
+        _id: 'kjjj',
+        chapter: '3',
+        title: 'methodology',
+        status: 'to-do',
       },
       {
-        _id: "kjjjddd",
-        chapter: "4",
-        title: "Review",
-        status: "to-do",
+        _id: 'kjjjddd',
+        chapter: '4',
+        title: 'Review',
+        status: 'to-do',
       },
     ],
   },
@@ -59,55 +59,60 @@ export const MenteeProjects: MenteeProjectsDataI[] = [
 
 export const MentorProjects: MenteeProjectsDataI[] = [
   {
-    _id: "3232",
-    topic: "AI Research",
-    status: "approved",
+    _id: '3232',
+    topic: 'AI Research',
+    status: 'approved',
     milestone: [
       {
-        _id: "jdjjs",
-        chapter: "1",
-        title: "introduction",
-        status: "completed",
+        _id: 'jdjjs',
+        chapter: '1',
+        title: 'introduction',
+        status: 'completed',
       },
       {
-        chapter: "2",
-        title: "literature review",
-        status: "in progress",
-        _id: "kjkk",
+        chapter: '2',
+        title: 'literature review',
+        status: 'in progress',
+        _id: 'kjkk',
       },
       {
-        _id: "kjjj",
-        chapter: "3",
-        title: "methodology",
-        status: "to-do",
+        _id: 'kjjj',
+        chapter: '3',
+        title: 'methodology',
+        status: 'to-do',
       },
       {
-        _id: "kjjjddd",
-        chapter: "4",
-        title: "Review",
-        status: "to-do",
+        _id: 'kjjjddd',
+        chapter: '4',
+        title: 'Review',
+        status: 'to-do',
       },
     ],
   },
 ];
 
-export type ActionTypeI = "approve" | "reject"
+export type ActionTypeI = 'approve' | 'reject';
 
 const ProjectsModules = () => {
   const [addProject, setAddProject] = useState<boolean>(false);
-  const [openProjectApproval, setOpenProjectApproval] = useState<boolean>(false);
+  const [openProjectApproval, setOpenProjectApproval] =
+    useState<boolean>(false);
   const [actionType, setActionType] = useState<ActionTypeI>();
   const loggedUser = user;
   const AllProjects =
-loggedUser.role === "mentee" ? MenteeProjects : MentorProjects;
+    loggedUser.role === 'mentee' ? MenteeProjects : MentorProjects;
 
-const handleOpenProjectReview = (_actionType:ActionTypeI, projectId:string) => {
-   setOpenProjectApproval(true)
-   setActionType(_actionType)
-}
+  const handleOpenProjectReview = (
+    _actionType: ActionTypeI,
+    projectId: string
+  ) => {
+    console.log({ projectId });
+    setOpenProjectApproval(true);
+    setActionType(_actionType);
+  };
   return (
     <Box as="main" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {loggedUser.role === "mentee" && (
+      {loggedUser.role === 'mentee' && (
         <>
           <Box
             as="a"
@@ -127,12 +132,12 @@ const handleOpenProjectReview = (_actionType:ActionTypeI, projectId:string) => {
       )}
 
       <Box as="section" className="mt-10 md:mt-20">
-        {loggedUser.role === "mentee" && (
+        {loggedUser.role === 'mentee' && (
           <Button
             onClick={() => setAddProject(true)}
             className="flex ml-auto cursor-pointer"
           >
-            {" "}
+            {' '}
             <Plus /> Add Project
           </Button>
         )}
@@ -145,10 +150,13 @@ const handleOpenProjectReview = (_actionType:ActionTypeI, projectId:string) => {
             />
           ) : (
             <Box>
-              {loggedUser.role === "mentee" ? (
+              {loggedUser.role === 'mentee' ? (
                 <MenteesProjects projects={AllProjects} />
               ) : (
-                <MentorsProject projects={AllProjects} handleOpenProjectReview={handleOpenProjectReview}/>
+                <MentorsProject
+                  projects={AllProjects}
+                  handleOpenProjectReview={handleOpenProjectReview}
+                />
               )}
             </Box>
           )}
@@ -163,11 +171,16 @@ const handleOpenProjectReview = (_actionType:ActionTypeI, projectId:string) => {
       </MainModal>
 
       <MainModal
-        title={`${actionType === "approve" ? "Project Approval" : "Project Rejection"}`}
+        title={`${
+          actionType === 'approve' ? 'Project Approval' : 'Project Rejection'
+        }`}
         open={openProjectApproval}
         onClose={() => setOpenProjectApproval(false)}
       >
-        <ApproveProjectForm actionType={actionType} onClose={() => setOpenProjectApproval(false)} />
+        <ApproveProjectForm
+          actionType={actionType}
+          onClose={() => setOpenProjectApproval(false)}
+        />
       </MainModal>
     </Box>
   );

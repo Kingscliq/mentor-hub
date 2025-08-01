@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { InputProps } from '@/types/components/input';
 import Box from '@/components/ui/box';
 import { TextAreaProps } from '@/types/components/textarea';
 
@@ -34,10 +33,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
           </Box>
         )}
 
-        <Box className={cn(
-          'relative',
-          customBorder && 'mt-4'
-        )}>
+        <Box className={cn('relative', customBorder && 'mt-4')}>
           {iconLeft && (
             <Box
               as="span"
@@ -55,7 +51,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
             aria-invalid={!!error}
             className={cn(
               'appearance-none block w-full min-h-20 pl-5 pr-3 py-2 placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-              customBorder ? customBorder : "border border-gray-300 rounded-md",
+              customBorder ? customBorder : 'border border-gray-300 rounded-md',
               iconLeft && 'pl-8',
               iconRight && 'pr-8',
               error && 'border-red-500 focus:border-red-500 focus:ring-red-500',

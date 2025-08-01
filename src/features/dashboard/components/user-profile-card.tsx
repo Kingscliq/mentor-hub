@@ -30,7 +30,7 @@ export const UserProfileCard: React.FC<UserProfileCardProps> = ({
       { name: 'Email', value: email },
       { name: 'Phone', value: phone },
       { name: 'Department', value: department },
-      ...(role === Roles.MENTEE
+      ...(role === Roles.STUDENT
         ? [{ name: 'Registration Number', value: regNo }]
         : []),
     ],

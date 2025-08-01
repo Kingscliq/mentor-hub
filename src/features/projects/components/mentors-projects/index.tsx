@@ -1,13 +1,17 @@
-import Box from "@/components/ui/box";
-import { ActionTypeI, MenteeProjectsDataI } from "../../projects.module";
-import { Card } from "@/components/ui/card";
-import MentorsProjectCard from "./projects-card";
+import Box from '@/components/ui/box';
+import { ActionTypeI, MenteeProjectsDataI } from '../../projects.module';
+import { Card } from '@/components/ui/card';
+import MentorsProjectCard from './projects-card';
 
 export interface MentorsProjectsProps {
   projects: MenteeProjectsDataI[];
-  handleOpenProjectReview:(val:ActionTypeI, projectId:string) => void
+  handleOpenProjectReview: (val: ActionTypeI, projectId: string) => void;
 }
-const MentorsProject: React.FC<MentorsProjectsProps> = ({ projects,handleOpenProjectReview }) => {
+const MentorsProject: React.FC<MentorsProjectsProps> = ({
+  projects,
+  handleOpenProjectReview,
+}) => {
+  console.log(projects); // TODO: will be removed
   return (
     <Card className="bg-white p-8 rounded-md ">
       <Box as="div" className="py-5">
@@ -17,8 +21,12 @@ const MentorsProject: React.FC<MentorsProjectsProps> = ({ projects,handleOpenPro
       </Box>
 
       <Box className="flex flex-col gap-y-7">
-        {[0, 1].map((item) => (
-          <MentorsProjectCard key={item} item={item}  handleOpenProjectReview={handleOpenProjectReview}/>
+        {[0, 1].map(item => (
+          <MentorsProjectCard
+            key={item}
+            item={item}
+            handleOpenProjectReview={handleOpenProjectReview}
+          />
         ))}
       </Box>
     </Card>
