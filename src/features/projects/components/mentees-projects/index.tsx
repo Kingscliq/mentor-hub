@@ -17,6 +17,7 @@ const statusicons: Record<string, StaticImageData> = {
   "in progress": orangeoutline,
   "to-do": greyoutline,
 };
+
 export interface MenteesProjectsProps {
   projects: MenteeProjectsDataI[];
 }

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { InputProps } from '@/types/components/input';
 import Box from '@/components/ui/box';
+import { TextAreaProps } from '@/types/components/textarea';
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (
     {
       label,
@@ -14,7 +14,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       className,
       customBorder,
       id,
-      type = 'text',
       ...props
     },
     ref
@@ -34,10 +33,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </Box>
         )}
 
-        <Box className={cn(
-          'relative',
-          customBorder && 'mt-4'
-        )}>
+        <Box className={cn('relative', customBorder && 'mt-4')}>
           {iconLeft && (
             <Box
               as="span"
@@ -48,15 +44,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
 
           <Box
-            as="input"
+            as="textarea"
             id={inputId}
             ref={ref}
-            type={type}
-            data-slot="input"
+            data-slot="textarea"
             aria-invalid={!!error}
             className={cn(
-              'appearance-none block w-full pl-5 pr-3 py-2 placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-              customBorder ? customBorder : "border border-gray-300 rounded-md",
+              'appearance-none block w-full min-h-20 pl-5 pr-3 py-2 placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+              customBorder ? customBorder : 'border border-gray-300 rounded-md',
               iconLeft && 'pl-8',
               iconRight && 'pr-8',
               error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
@@ -89,6 +84,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = 'Input';
+Textarea.displayName = 'Textarea';
 
-export { Input };
+export { Textarea };

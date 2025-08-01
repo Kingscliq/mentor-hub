@@ -51,7 +51,9 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #2563eb; /* Tailwind bg-blue-600 */
+  --primary:#0F6CBD ; /* Tailwind bg-blue-600 #2563eb*/
+  --gray-500:#D1D1D1;
+  --gray-light:#FAFAFA;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
