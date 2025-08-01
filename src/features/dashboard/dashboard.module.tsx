@@ -19,7 +19,7 @@ import { QuickActions } from "../dashboard/components/quick-actions";
 export const user = {
   id: 1,
   name: 'John Doe',
-  role: 'mentee',
+  role: 'mentor',
 };
 
 export const DashboardModule = () => {

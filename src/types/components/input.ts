@@ -4,4 +4,5 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
   helperText?: string;
+  customBorder?:string;
 }

@@ -25,4 +25,11 @@ export const registerValidationSchema = Yup.object({
   password: Yup.string().min(6, 'Too short').required('Password is Required'),
 });
 
+export const ADDPROJECTSCHEMA = Yup.object({
+  projectTitle:Yup.string().required('Project Title Is Required'),
+  projectDescription:Yup.string().max(500, "Text cannot exceed 500").required('Project Description Is Required')
+})
 
+export const APPROVEPROJECTSCHEMA = Yup.object({
+  comment:Yup.string().required('Comment Is Required')
+})
