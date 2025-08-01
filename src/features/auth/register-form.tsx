@@ -12,6 +12,7 @@ import Box from '@/components/ui/box';
 
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react'; // for toggle icons
+import { useRegister } from '@/hooks/auth';
 
 const initialValues: RegisterFormValues = {
   role: '',
@@ -27,11 +28,12 @@ const initialValues: RegisterFormValues = {
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
+  const { registerUser, isRegistering } = useRegister();
   const formik = useFormik({
     initialValues,
     validationSchema: registerValidationSchema,
     onSubmit: values => {
-      console.log('Form submitted:', values);
+      registerUser(values);
     },
   });
 
@@ -58,7 +60,6 @@ export default function Register() {
             >
               Role
             </Box>
-            {/* TODO: we need to abstract <Select> component into a single component that accepts options[] as props as well as other props like error etc */}
             <Select
               value={values.role}
               onChange={value => setFieldValue('role', value)}
@@ -216,6 +217,7 @@ export default function Register() {
           <Button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            loading={isRegistering}
           >
             Create Account
           </Button>
