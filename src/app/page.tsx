@@ -6,10 +6,10 @@ import {
   GroupCard,
   Groups,
   GroupSlider,
+  LoginForm,
   mockGroups,
   UserProfileCard,
 } from '@/features';
-import LoginForm from '@/features/auth/login-form';
 import RegisterForm from '@/features/auth/register-form';
 
 import { Logger } from '@/lib';
