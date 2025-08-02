@@ -16,10 +16,7 @@ export const Activity: React.FC<ActivityProps> = ({
 }) => {
   return (
     <>
-      <Box
-        as="section"
-        //   className="bg-white rounded-lg"
-      >
+      <Box as="section">
         <Box
           as="section"
           className={`bg-gray-100 p-4 flex flex-col rounded-lg mb-3 border-l-2 ${color}`}
