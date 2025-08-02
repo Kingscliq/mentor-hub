@@ -15,21 +15,27 @@ const activity: Array<{
   message: string;
   date: string;
   time: string;
+  color: string;
 }> = [
   {
     message: 'New group "Drone Team" was created',
     date: 'June 30',
     time: '10:30 AM',
+    color: 'red',
   },
   {
     message: 'Project topic "Drone" as submitted for approval',
     date: 'June 30',
     time: '10:30 AM',
+    color: 'blue',
+
   },
   {
     message: 'User “Jude Nwaeke“ was added to mentorship program ',
     date: 'June 30',
     time: '10:30 AM',
+    color: 'yellow',
+
   },
 ];
 
@@ -105,7 +111,7 @@ export const AdminDashboard = () => {
         })}
       </Box>
       <Box className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-        <Box as="h3" className="bg-white text-3xl font-bold text-gray-900">
+        <Box as="h2" className="text-3xl font-bold text-gray-900 mb-4">
           Recent Activity
         </Box>
         <Box>
@@ -116,6 +122,8 @@ export const AdminDashboard = () => {
                 message={act.message}
                 date={act.date}
                 time={act.time}
+                color={act.color}
+                
               />
             );
           })}
