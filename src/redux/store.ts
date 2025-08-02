@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import getPersisterReducer from './persistor';
+import getPersistedReducer from './persistor';
 import {
   persistStore,
   FLUSH,
@@ -12,7 +12,7 @@ import {
 
 import { Reducer } from 'redux';
 
-const rootReducer = getPersisterReducer() as Reducer;
+const rootReducer = getPersistedReducer() as Reducer;
 
 export const store = configureStore({
   reducer: rootReducer,

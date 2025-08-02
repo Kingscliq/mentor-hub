@@ -9,9 +9,12 @@ import { loginSchema } from '@/schema/auth/login.schema';
 import { LoginFormValues } from '@/types/features/auth';
 import Link from 'next/link';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { useLogin } from '@/hooks/auth/useLogin';
 
 export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const { loginUser, isLoading } = useLogin();
 
   const formik = useFormik<LoginFormValues>({
     initialValues: {
@@ -20,7 +23,7 @@ export const LoginForm = () => {
     },
     validationSchema: loginSchema,
     onSubmit: values => {
-      console.log('Logging in with', values);
+      loginUser(values);
     },
   });
 
@@ -78,6 +81,7 @@ export const LoginForm = () => {
             <Button
               type="submit"
               className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+              loading={isLoading}
             >
               Login
             </Button>

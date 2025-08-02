@@ -9,3 +9,9 @@ export const urls = {
   REGISTER: `${env.API_V1}auth/signup`,
   USER_PROFILE: `${env.API_V1}auth/profile`,
 };
+
+export const user = {
+  id: 1,
+  name: 'John Doe',
+  role: 'mentor',
+};

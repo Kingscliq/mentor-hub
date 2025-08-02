@@ -1,26 +1,42 @@
-import { client, urls } from '@/lib';
-import { LoginFormValues } from '@/types/features/auth';
+import { useAuthActions } from '@/hooks/auth/useAuthStore';
+import { clearLocalStorage, client, urls } from '@/lib';
+import { LoginFormValues, LoginResponse } from '@/types/features/auth';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
 import { toast } from 'sonner';
 
 export const useLogin = () => {
+  const { setUser } = useAuthActions();
+  const { logout } = useAuthActions();
   const router = useRouter();
+
+  const handleLogout = useCallback(() => {
+    router.push('/login');
+    logout();
+    clearLocalStorage();
+  }, [logout, router]);
+
   const {
     mutate: loginUser,
     data: loginResponse,
     isPending: isLoading,
-  } = useMutation<string, Error, LoginFormValues>({
+  } = useMutation<LoginResponse, Error, LoginFormValues>({
     mutationKey: ['register-mutation'],
     mutationFn: async (userData: LoginFormValues) => {
-      const res = await client.post(urls.REGISTER, userData);
+      const res = await client.post(urls.LOGIN, userData);
       return res.data;
     },
-    onSuccess: data => {
-      toast(`Login successful`, {
-        duration: 5000,
-      });
-      console.log(data);
+    onSuccess: res => {
+      toast(
+        typeof res?.message === 'string' ? res.message : 'Login Successful',
+        {
+          duration: 5000,
+        }
+      );
+      if (res?.data?.user) {
+        setUser(res.data.user);
+      }
       router.push('/dashboard');
     },
     onError: err => {
@@ -35,5 +51,5 @@ export const useLogin = () => {
     },
   });
 
-  return { loginUser, loginResponse, isLoading };
+  return { loginUser, loginResponse, isLoading, handleLogout };
 };

@@ -1,13 +1,13 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
-import { user } from '../dashboard';
 import Box from '@/components/ui/box';
 import { ChevronLeft } from 'lucide-react';
 import { user1 } from '../../../public/images';
 import MiniProfileCard from './components/mini-profile';
 import MainProfile from './components/main-profile';
 import { GroupsDetailsI } from '@/types/features/groups';
+import { user } from '@/lib';
 
 // Will be removed when api is ready
 export const groupsData: Record<string, GroupsDetailsI[]> = {
