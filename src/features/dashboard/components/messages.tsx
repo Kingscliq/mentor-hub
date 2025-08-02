@@ -8,14 +8,22 @@ interface MessageProps {
   color: string;
 }
 
-export const Messages: React.FC<MessageProps> = ({ message, date, time }) => {
+export const Messages: React.FC<MessageProps> = ({
+  message,
+  date,
+  time,
+  color,
+}) => {
   return (
     <>
       <Box
         as="section"
         //   className="bg-white rounded-lg"
       >
-        <Box as="section" className="bg-gray-100 p-4 flex flex-col rounded-lg mb-3 border-l-2 {`text-${color}-500`}">
+        <Box
+          as="section"
+          className={`bg-gray-100 p-4 flex flex-col rounded-lg mb-3 border-l-2 ${color}`}
+        >
           <Box className="">{message}</Box>
           <Box className="text-[12px] text-black/50">
             {date} {time}

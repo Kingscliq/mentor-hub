@@ -21,21 +21,19 @@ const activity: Array<{
     message: 'New group "Drone Team" was created',
     date: 'June 30',
     time: '10:30 AM',
-    color: 'red',
+    color: 'border-l-red-500',
   },
   {
     message: 'Project topic "Drone" as submitted for approval',
     date: 'June 30',
     time: '10:30 AM',
-    color: 'blue',
-
+    color: 'border-l-blue-500',
   },
   {
     message: 'User “Jude Nwaeke“ was added to mentorship program ',
     date: 'June 30',
     time: '10:30 AM',
-    color: 'yellow',
-
+    color: 'border-l-yellow-500',
   },
 ];
 
@@ -123,7 +121,6 @@ export const AdminDashboard = () => {
                 date={act.date}
                 time={act.time}
                 color={act.color}
-                
               />
             );
           })}
