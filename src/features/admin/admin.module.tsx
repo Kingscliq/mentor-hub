@@ -3,8 +3,9 @@
 import React, { useMemo } from 'react';
 import { BookOpen, Users, SquareCheckBig, Bookmark } from 'lucide-react';
 import { StatCard } from '@/features';
-import { Messages } from '../dashboard/components/messages';
+import { Activity } from '../dashboard/components/messages';
 import Box from '@/components/ui/box';
+
 export const user = {
   id: 1,
   name: 'John Doe',
@@ -115,7 +116,7 @@ export const AdminDashboard = () => {
         <Box>
           {activity.map((act, index) => {
             return (
-              <Messages
+              <Activity
                 key={index}
                 message={act.message}
                 date={act.date}

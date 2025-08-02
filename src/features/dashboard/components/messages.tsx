@@ -1,14 +1,14 @@
 import Box from '@/components/ui/box';
 import React from 'react';
 
-interface MessageProps {
+interface ActivityProps {
   message: string;
   date: string;
   time: string;
   color: string;
 }
 
-export const Messages: React.FC<MessageProps> = ({
+export const Activity: React.FC<ActivityProps> = ({
   message,
   date,
   time,
