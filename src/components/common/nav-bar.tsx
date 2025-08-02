@@ -13,25 +13,23 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Box from '@/components/ui/box';
-import { user } from '@/features';
+// import { user } from '@/features';
 import { usePathname } from 'next/navigation';
+import { useAuth } from '@/hooks/auth/useAuthStore';
+import { Role, Roles } from '@/types/features/auth';
+import { useLogin } from '@/hooks/auth/useLogin';
 
 const Header: React.FC = () => {
-  //   const { user, logout } = useAuth();
-  //   const { notifications } = useData();
-  //   const location = useLocation();
+  const user = useAuth();
+  const { handleLogout } = useLogin();
 
-  //   const unreadNotifications = notifications.filter(
-  //     n => !n.read && n.userId === user?.id
-  //   );
-
-  const getRoleColor = (role: string) => {
+  const getRoleColor = (role: Role) => {
     switch (role) {
-      case 'mentee':
+      case Roles.SUPERVISOR:
         return 'bg-blue-100 text-blue-800';
-      case 'mentor':
+      case Roles.STUDENT:
         return 'bg-emerald-100 text-emerald-800';
-      case 'admin':
+      case Roles.ADMIN:
         return 'bg-amber-100 text-amber-800';
       default:
         return 'bg-gray-100 text-gray-800';
@@ -46,7 +44,7 @@ const Header: React.FC = () => {
       { path: '/messages', label: 'Messages', icon: MessageSquare },
     ];
 
-    if (user.role === 'admin') {
+    if (user?.role === Roles.ADMIN) {
       baseItems.push({ path: '/admin', label: 'Admin', icon: Settings });
     }
 
@@ -110,15 +108,15 @@ const Header: React.FC = () => {
               <Box className="flex items-center space-x-3">
                 <Box className="text-right">
                   <Box as="p" className="text-sm font-medium text-gray-900">
-                    {user.name}
+                    {`${user?.firstName ?? 'N'} ${user?.lastName ?? 'A'} `}
                   </Box>
                   <Box
                     as="span"
                     className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getRoleColor(
-                      user.role
+                      user?.role
                     )}`}
                   >
-                    {user.role}
+                    {user?.role ?? 'N/A'}
                   </Box>
                 </Box>
                 <Box className="flex items-center space-x-2">
@@ -127,7 +125,7 @@ const Header: React.FC = () => {
                   </Box>
                   <Box
                     as="button"
-                    onClick={() => console.log('I just logged out')}
+                    onClick={() => handleLogout()}
                     className="p-2 text-gray-400 hover:text-gray-500 transition-colors"
                   >
                     <LogOut className="h-4 w-4" />

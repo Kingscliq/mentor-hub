@@ -17,6 +17,7 @@ export interface RegisterFormValues {
 export enum Roles {
   STUDENT = 'student',
   SUPERVISOR = 'supervisor',
+  ADMIN = 'admin',
 }
 
 export type LoginFormValues = {
@@ -26,4 +27,26 @@ export type LoginFormValues = {
 
 export interface VerifyEmailValues {
   pin: string;
+}
+
+export interface LoginResponse {
+  status: 'success' | 'fail';
+  message: string;
+  token: string;
+  data: {
+    user: User;
+  };
+}
+
+export interface User {
+  department: string;
+  isVerified: boolean;
+  role: Role;
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  matricNumber: string;
+  academicYear: string;
 }

@@ -1,5 +1,5 @@
+import { LoginForm } from '@/features';
+
 export default function Login() {
-  return (
-    <div className="flex h-screen items-center justify-center">Login Form</div>
-  );
+  return <LoginForm />;
 }
