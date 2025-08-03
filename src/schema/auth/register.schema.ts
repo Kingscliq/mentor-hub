@@ -32,6 +32,12 @@ export const addProjectSchema = Yup.object({
     .required('Project Description Is Required'),
 });
 
+export const addUserSchema = Yup.object({
+  name: Yup.string().required('Name Is Required'),
+  email: Yup.string().email('Invalid email').required('Email is Required'),
+  role: Yup.string().required('Role Is Required'),
+});
+
 export const approveProjectSchema = Yup.object({
   comment: Yup.string().required('Comment Is Required'),
 });

@@ -15,11 +15,13 @@ import Box from '@/components/ui/box';
 import { RecentActivityList } from "../dashboard/widgets/recent-activity-lists";
 import { RecentProjects } from "../dashboard/widgets/recent-projects";
 import { QuickActions } from "../dashboard/components/quick-actions";
+import { AdminRecentActivityCard } from './components/admin-recent-activity-card';
+import { AdminRecentActivity } from './components/admin/admin-recent-activity';
 
 export const user = {
   id: 1,
   name: 'John Doe',
-  role: 'mentor',
+  role: 'admin',
 };
 
 export const DashboardModule = () => {
@@ -28,7 +30,7 @@ export const DashboardModule = () => {
     return {
       id: 1,
       name: 'John Doe',
-      role: 'mentee',
+      role: 'admin',
     };
   }, []);
 
@@ -39,6 +41,7 @@ export const DashboardModule = () => {
       value: string | number;
       icon: React.ElementType;
       color: string;
+      url?:string
     }>
   > = {
     mentee: [
@@ -95,25 +98,26 @@ export const DashboardModule = () => {
     ],
     admin: [
       {
-        name: 'Total Projects',
-        value: 12,
+        name: 'Total Groups',
+        value: 5,
         icon: BookOpen,
         color: 'bg-indigo-500',
       },
       {
-        name: 'Active Matches',
-        value: 6,
+        name: 'Total Users',
+        value: 2,
         icon: Users,
         color: 'bg-emerald-500',
+        url:'/users'
       },
       {
-        name: 'Completion Rate',
+        name: 'Pending Approvals',
         value: '75%',
         icon: TrendingUp,
         color: 'bg-green-500',
       },
       {
-        name: 'Pending Approvals',
+        name: 'Archived Groups',
         value: 1,
         icon: Clock,
         color: 'bg-amber-500',
@@ -149,20 +153,34 @@ export const DashboardModule = () => {
               color={stat.color}
               name={stat.name}
               value={stat.value}
+              url={stat.url}
             />
           );
         })}
        </Box>
 
-       {/* Recent Projects & Recent Activity */}
-        <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
+       {/* Recent Projects & Recent Activity for mentors and mentee*/}
+       {
+        user.role === 'mentor' || user.role === 'mentee' && (
+          <>
+          <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <RecentProjects />
           <RecentActivityList />
-        </Box>
-      {/* Quick Actions */}
-      <Box as="section" className="mt-8">
-          <QuickActions />
-      </Box>
+          </Box>
+           {/* Quick Actions */}
+          <Box as="section" className="mt-8">
+              <QuickActions />
+          </Box>
+          </>
+        )
+       }
+
+       {
+        user.role === 'admin' && 
+         (
+          <AdminRecentActivity/>
+         )     
+       }
 
     </Box>
   );

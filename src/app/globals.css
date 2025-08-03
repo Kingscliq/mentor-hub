@@ -114,6 +114,43 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* table scroll configuration */
+.table-scroll ::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.no-modal-scroll-track::-webkit-scrollbar {
+  background: transparent;
+  background-color: transparent;
+  height: 0;
+}
+.no-scroll-track::-webkit-scrollbar{
+  background: transparent;
+  background-color: transparent;
+}
+
+.no-modal-scroll-track::-webkit-scrollbar-track {
+  background: transparent;
+  background-color: transparent;
+}
+
+.no-modal-scroll-track::-webkit-scrollbar-thumb {
+  background: transparent;
+  background-color: transparent;
+}
+
+tbody tr:nth-child(even) {
+  /* background: #fcf9f5; */
+  background: #f8f5f3;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -1,4 +1,5 @@
 import Box from '@/components/ui/box';
+import Link from 'next/link';
 import React from 'react';
 
 interface StatCardProps {
@@ -6,6 +7,7 @@ interface StatCardProps {
   color: string;
   name: string;
   value: string | number;
+  url?:string
 }
 
 /**
@@ -37,12 +39,14 @@ export const StatCard: React.FC<StatCardProps> = ({
   color,
   name,
   value,
+  url='#'
 }) => {
   return (
     <Box
       as="section"
-      className="bg-white rounded-lg shadow-sm p-6 border border-gray-200"
-    >
+      className="bg-white hover:bg-[#FAFAFA] rounded-lg shadow-sm p-6 border border-gray-200 transition"
+    > 
+     <Link href={url}>
       <Box as="section" className="flex items-center">
         <Box as="section" className={`p-3 rounded-lg ${color}`}>
           <Icon className="h-6 w-6 text-white" />
@@ -56,6 +60,7 @@ export const StatCard: React.FC<StatCardProps> = ({
           </Box>
         </Box>
       </Box>
+      </Link>
     </Box>
   );
 };
