@@ -25,16 +25,37 @@ export type LoginFormValues = {
   password: string;
 };
 
-export interface VerifyEmailValues {
-  pin: string;
-}
+export type ResponseStatus = 'success' | 'fail';
 
 export interface LoginResponse {
-  status: 'success' | 'fail';
+  status: ResponseStatus;
   message: string;
   token: string;
   data: {
     user: User;
+  };
+}
+
+export interface AuthErrorResponse {
+  status: ResponseStatus;
+  message: string;
+}
+
+// TODO: Change the registration response to match the core user response
+export interface RegisterResponse {
+  status: ResponseStatus;
+  message: string;
+  token: string;
+  data: {
+    user: {
+      department: string;
+      isVerified: boolean;
+      role: Role;
+      email: string;
+      firstName: string;
+      lastName: string;
+      academicYear: string | number;
+    };
   };
 }
 
@@ -48,5 +69,12 @@ export interface User {
   lastName: string;
   phoneNumber: string;
   matricNumber: string;
-  academicYear: string;
+  academicYear: string | number;
+}
+
+export interface ResendOtpValues {
+  email: string;
+}
+export interface VerifyEmailValues {
+  otp: string;
 }
