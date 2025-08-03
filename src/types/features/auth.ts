@@ -17,6 +17,7 @@ export interface RegisterFormValues {
 export enum Roles {
   STUDENT = 'student',
   SUPERVISOR = 'supervisor',
+  ADMIN = 'admin',
 }
 
 export type LoginFormValues = {
@@ -24,6 +25,56 @@ export type LoginFormValues = {
   password: string;
 };
 
+export type ResponseStatus = 'success' | 'fail';
+
+export interface LoginResponse {
+  status: ResponseStatus;
+  message: string;
+  token: string;
+  data: {
+    user: User;
+  };
+}
+
+export interface AuthErrorResponse {
+  status: ResponseStatus;
+  message: string;
+}
+
+// TODO: Change the registration response to match the core user response
+export interface RegisterResponse {
+  status: ResponseStatus;
+  message: string;
+  token: string;
+  data: {
+    user: {
+      department: string;
+      isVerified: boolean;
+      role: Role;
+      email: string;
+      firstName: string;
+      lastName: string;
+      academicYear: string | number;
+    };
+  };
+}
+
+export interface User {
+  department: string;
+  isVerified: boolean;
+  role: Role;
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  matricNumber: string;
+  academicYear: string | number;
+}
+
+export interface ResendOtpValues {
+  email: string;
+}
 export interface VerifyEmailValues {
-  pin: string;
+  otp: string;
 }

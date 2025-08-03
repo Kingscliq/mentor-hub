@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   BookOpen,
   Users,
@@ -12,28 +12,15 @@ import {
 } from 'lucide-react';
 import { StatCard } from '@/features';
 import Box from '@/components/ui/box';
-import { RecentActivityList } from "../dashboard/widgets/recent-activity-lists";
-import { RecentProjects } from "../dashboard/widgets/recent-projects";
-import { QuickActions } from "../dashboard/components/quick-actions";
-import { AdminRecentActivityCard } from './components/admin-recent-activity-card';
+import { RecentActivityList } from '../dashboard/widgets/recent-activity-lists';
+import { RecentProjects } from '../dashboard/widgets/recent-projects';
+import { QuickActions } from '../dashboard/components/quick-actions';
+import { useAuth } from '@/hooks/auth/useAuthStore';
 import { AdminRecentActivity } from './components/admin/admin-recent-activity';
-
-export const user = {
-  id: 1,
-  name: 'John Doe',
-  role: 'admin',
-};
 
 export const DashboardModule = () => {
   // TODO: this is a dummy user will be removed once we start API integration
-  const user = useMemo(() => {
-    return {
-      id: 1,
-      name: 'John Doe',
-      role: 'admin',
-    };
-  }, []);
-
+  const user = useAuth();
   const statsByRole: Record<
     string,
     Array<{
@@ -132,7 +119,7 @@ export const DashboardModule = () => {
     <Box as="section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Box as="section" className="mb-8">
         <Box as="h1" className="text-3xl font-bold text-gray-900">
-          Welcome back, {user?.name ?? 'N/A'}!
+          Welcome back, {user?.firstName ?? 'N/A'}!
         </Box>
         <Box as="p" className="mt-2 text-gray-600">
           Here&apos;s what&apos;s happening in your mentorship journey.
@@ -140,7 +127,7 @@ export const DashboardModule = () => {
       </Box>
 
       {/* Stats Overview */}
-       <Box
+      <Box
         as="section"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
       >
@@ -161,7 +148,7 @@ export const DashboardModule = () => {
 
        {/* Recent Projects & Recent Activity for mentors and mentee*/}
        {
-        user.role === 'mentor' || user.role === 'mentee' && (
+        user.role != 'admin' && (
           <>
           <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <RecentProjects />
@@ -182,6 +169,15 @@ export const DashboardModule = () => {
          )     
        }
 
+      {/* Recent Projects & Recent Activity */}
+      <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <RecentProjects />
+        <RecentActivityList />
+      </Box>
+      {/* Quick Actions */}
+      <Box as="section" className="mt-8">
+        <QuickActions />
+      </Box>
     </Box>
   );
 };

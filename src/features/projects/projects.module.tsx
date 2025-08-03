@@ -2,7 +2,6 @@
 
 import Box from '@/components/ui/box';
 import { ChevronLeft, Plus } from 'lucide-react';
-import { user } from '../dashboard';
 import { Button } from '@/components/ui';
 import EmptyProject from './widgets/empty-project';
 import MenteesProjects from './components/mentees-projects';
@@ -11,6 +10,8 @@ import { useState } from 'react';
 import MainModal from '@/components/modals';
 import AddProjectForm from './widgets/add-project-form';
 import ApproveProjectForm from './widgets/project-approval-form';
+import { useAuth } from '@/hooks/auth/useAuthStore';
+import { Roles } from '@/types/features/auth';
 
 export interface MenteeProjectsDataI {
   _id: string;
@@ -94,13 +95,14 @@ export const MentorProjects: MenteeProjectsDataI[] = [
 export type ActionTypeI = 'approve' | 'reject';
 
 const ProjectsModules = () => {
+  const user = useAuth();
   const [addProject, setAddProject] = useState<boolean>(false);
   const [openProjectApproval, setOpenProjectApproval] =
     useState<boolean>(false);
   const [actionType, setActionType] = useState<ActionTypeI>();
   const loggedUser = user;
   const AllProjects =
-    loggedUser.role === 'mentee' ? MenteeProjects : MentorProjects;
+    loggedUser.role === Roles.STUDENT ? MenteeProjects : MentorProjects;
 
   const handleOpenProjectReview = (
     _actionType: ActionTypeI,
@@ -112,7 +114,7 @@ const ProjectsModules = () => {
   };
   return (
     <Box as="main" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {loggedUser.role === 'mentee' && (
+      {loggedUser.role === Roles.STUDENT && (
         <>
           <Box
             as="a"
@@ -132,7 +134,7 @@ const ProjectsModules = () => {
       )}
 
       <Box as="section" className="mt-10 md:mt-20">
-        {loggedUser.role === 'mentee' && (
+        {loggedUser.role === Roles.STUDENT && (
           <Button
             onClick={() => setAddProject(true)}
             className="flex ml-auto cursor-pointer"
@@ -150,7 +152,7 @@ const ProjectsModules = () => {
             />
           ) : (
             <Box>
-              {loggedUser.role === 'mentee' ? (
+              {loggedUser.role === Roles.STUDENT ? (
                 <MenteesProjects projects={AllProjects} />
               ) : (
                 <MentorsProject

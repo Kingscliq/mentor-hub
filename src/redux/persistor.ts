@@ -2,7 +2,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 import rootReducer from './root';
 
-const getPersisterReducer = () => {
+const getPersistedReducer = () => {
   const isClient = typeof window !== 'undefined';
 
   if (isClient) {
@@ -17,4 +17,4 @@ const getPersisterReducer = () => {
   return rootReducer;
 };
 
-export default getPersisterReducer;
+export default getPersistedReducer;
