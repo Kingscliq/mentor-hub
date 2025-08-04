@@ -1,30 +1,21 @@
 'use client';
 
-import Box from '@/components/ui/box';
+import { ActionTypeI, IMenteeProjectsData } from '@/types/features/projects';
 import { ChevronLeft, Plus } from 'lucide-react';
-import { Button } from '@/components/ui';
-import EmptyProject from './widgets/empty-project';
-import MenteesProjects from './components/mentees-projects';
-import MentorsProject from './components/mentors-projects';
-import { useState } from 'react';
-import MainModal from '@/components/modals';
+
 import AddProjectForm from './widgets/add-project-form';
 import ApproveProjectForm from './widgets/project-approval-form';
-import { useAuth } from '@/hooks/auth/useAuthStore';
+import Box from '@/components/ui/box';
+import { Button } from '@/components/ui';
+import EmptyProject from './widgets/empty-project';
+import MainModal from '@/components/modals';
+import MenteesProjects from './components/mentees-projects';
+import MentorsProject from './components/mentors-projects';
 import { Roles } from '@/types/features/auth';
+import { useAuth } from '@/hooks/auth/useAuthStore';
+import { useState } from 'react';
 
-export interface MenteeProjectsDataI {
-  _id: string;
-  topic: string;
-  status: string;
-  milestone: {
-    _id: string;
-    chapter: string;
-    title: string;
-    status: string;
-  }[];
-}
-export const MenteeProjects: MenteeProjectsDataI[] = [
+export const MenteeProjects: IMenteeProjectsData[] = [
   {
     _id: '3232',
     topic: 'AI Research',
@@ -58,7 +49,7 @@ export const MenteeProjects: MenteeProjectsDataI[] = [
   },
 ];
 
-export const MentorProjects: MenteeProjectsDataI[] = [
+export const MentorProjects: IMenteeProjectsData[] = [
   {
     _id: '3232',
     topic: 'AI Research',
@@ -91,8 +82,6 @@ export const MentorProjects: MenteeProjectsDataI[] = [
     ],
   },
 ];
-
-export type ActionTypeI = 'approve' | 'reject';
 
 const ProjectsModules = () => {
   const user = useAuth();
@@ -137,7 +126,7 @@ const ProjectsModules = () => {
         {loggedUser.role === Roles.STUDENT && (
           <Button
             onClick={() => setAddProject(true)}
-            className="flex ml-auto cursor-pointer"
+            className="flex ml-auto cursor-pointer bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
             {' '}
             <Plus /> Add Project
