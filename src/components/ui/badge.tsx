@@ -24,6 +24,8 @@ const badgeVariants = cva(
         inactive: 'bg-red-100 text-red-700',
         pending: 'bg-amber-100 text-amber-700',
         "to-do": 'bg-gray-100 text-gray-700',
+        "mentor": 'bg-gray-100 text-gray-700',
+        "mentee": 'bg-gray-100 text-gray-700',
       },
     },
     defaultVariants: {

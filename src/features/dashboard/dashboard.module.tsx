@@ -31,18 +31,21 @@ export const DashboardModule = () => {
       url?:string
     }>
   > = {
-    mentee: [
+    student: [
       {
-        name: 'Active Projects',
+        name: 'Active Groups',
         value: 5,
         icon: BookOpen,
         color: 'bg-blue-500',
+          url:'/groups'
+        
       },
       {
         name: 'Completed Milestones',
         value: 10,
         icon: CheckCircle,
         color: 'bg-green-500',
+        url:'/projects'
       },
       {
         name: 'Pending Reviews',
@@ -57,12 +60,13 @@ export const DashboardModule = () => {
         color: 'bg-purple-500',
       },
     ],
-    mentor: [
+    supervisor: [
       {
         name: 'Active Mentees',
         value: 4,
         icon: Users,
         color: 'bg-emerald-500',
+        
       },
       {
         name: 'Projects Supervised',
@@ -89,13 +93,14 @@ export const DashboardModule = () => {
         value: 5,
         icon: BookOpen,
         color: 'bg-indigo-500',
+         url:'/admin/groups'
       },
       {
         name: 'Total Users',
         value: 2,
         icon: Users,
         color: 'bg-emerald-500',
-        url:'/users'
+        url:'/admin/users'
       },
       {
         name: 'Pending Approvals',
@@ -148,7 +153,7 @@ export const DashboardModule = () => {
 
        {/* Recent Projects & Recent Activity for mentors and mentee*/}
        {
-        user.role != 'admin' && (
+        user?.role && user.role !== 'admin' && (
           <>
           <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <RecentProjects />
@@ -169,15 +174,7 @@ export const DashboardModule = () => {
          )     
        }
 
-      {/* Recent Projects & Recent Activity */}
-      <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <RecentProjects />
-        <RecentActivityList />
-      </Box>
-      {/* Quick Actions */}
-      <Box as="section" className="mt-8">
-        <QuickActions />
-      </Box>
+     
     </Box>
   );
 };

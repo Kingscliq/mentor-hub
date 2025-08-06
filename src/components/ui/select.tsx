@@ -228,3 +228,6 @@ export const Select = ({
     </Box>
   );
 };
+
+
+export {SelectComponent,SelectItem,SelectContent,SelectValue}

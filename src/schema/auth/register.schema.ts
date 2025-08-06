@@ -38,6 +38,11 @@ export const addUserSchema = Yup.object({
   role: Yup.string().required('Role Is Required'),
 });
 
+export const addGroupSchema = Yup.object({
+  name: Yup.string().required('Group Name Is Required'),
+  maximum_size: Yup.number().required('Maximum group size is Required'),
+});
+
 export const approveProjectSchema = Yup.object({
   comment: Yup.string().required('Comment Is Required'),
 });

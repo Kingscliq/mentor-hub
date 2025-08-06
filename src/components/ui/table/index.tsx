@@ -45,7 +45,7 @@ export interface TableProps<T extends RowData> {
   customEmptyState: JSX.Element;
 }
 
-function Table<T extends RowData>({
+function TableView<T extends RowData>({
   columns,
   data,
   children,
@@ -362,4 +362,4 @@ function Table<T extends RowData>({
   );
 }
 
-export { Table };
+export { TableView };

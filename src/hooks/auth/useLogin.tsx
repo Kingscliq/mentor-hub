@@ -1,5 +1,5 @@
 import { useAuthActions } from '@/hooks/auth/useAuthStore';
-import { clearLocalStorage, client, urls } from '@/lib';
+import { clearLocalStorage, client, env, storeCookie, urls } from '@/lib';
 import { LoginFormValues, LoginResponse } from '@/types/features/auth';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -34,6 +34,9 @@ export const useLogin = () => {
           duration: 5000,
         }
       );
+      if (res?.token && typeof res?.token === 'string') {
+              storeCookie({ key: env.AUTH_TOKEN, value: res.token });
+            }
       if (res?.data?.user) {
         setUser(res.data.user);
       }

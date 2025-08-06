@@ -4,20 +4,25 @@ import { Button, Input } from "@/components/ui";
 import Box from "@/components/ui/box";
 import Search from "@/components/ui/search";
 import { Bookmark, ChevronLeft, Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PaginationState } from "@tanstack/react-table";
 import useDebounce from "@/hooks/dashboard";
-import { GroupsTable } from "./components/groups-table";
+import NewGroupColumns from "./components/groups-table";
+import MainModal from "@/components/modals";
+import AddGroupsForm from "./widgets/add-group-form";
+import GroupsTable from "./components/groups-table";
+import { GroupDataResponse, GroupRecordsI, useGetAllGroups } from "./api";
+import { toast } from "sonner";
 
 
 export interface GroupDataI {
     _id:string
     name:string;
-    email:string;
-    phone:string;
-    role:string;
-    assigned_group:string;
+    num_of_mentors:number,
+    num_of_mentees:number,
+    created_at:string
     status:string;
+    maximum_size:number;
 }
 
 export const userTabs = [
@@ -42,220 +47,34 @@ export const userData:GroupDataI[] = [
     {
         _id:'1',
         name:'Ami Vivian',
-        email:'ami@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    },
-    {
-        _id:'2',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    },
-    {
-        _id:'3',
-        name:'Ami Vivian',
-        email:'ami@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    },
-    {
-        _id:'4',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'inactive'
-    },
-    {
-        _id:'5',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'6',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'7',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'8',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'9',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'10',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'11',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'12',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'13',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'14',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'15',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'4',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'4',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'4',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'4',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'4',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'4',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    }, {
-        _id:'4',
-        name:'Sandra New',
-        email:'sandra@gmail.com',
-        phone:'08123456789',
-        role:'mentor',
-        assigned_group:"Ai Research",
-        status:'active'
-    },
+        num_of_mentors:2,
+        num_of_mentees:3,
+        created_at:'march 10 2025',
+        status:'active',
+        maximum_size:3
+    }
 ]
 const AdminGroupModules = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("all");
-  const [allGroupData, setAllGroupData] = useState<GroupDataI[]>(userData);
-  const [paginationState, setPaginationState] = useState<PaginationState>({
+    const [openAddGroupModal, setOpenAddGroupModal] = useState<boolean>(false)
+  const [allGroupData, setAllGroupData] = useState<GroupRecordsI[] | undefined>();
+  const [paginationState, setPaginationState] = useState({
     pageIndex: 0,
-    pageSize: 30,
+    pageSize: 10,
   });
   
   ///delays the search after typing
   const deboundedVal = useDebounce(searchTerm,1500)
-
-  //handle tab selected
-  const handleSelected = (role:string, _activeTab:string) => {
-    if(role === 'all'){
-       setAllGroupData(userData)
-       setActiveTab('all')
-    }else{
-        const filteredData = userData.filter(item => item.role === role)
-        setAllGroupData(filteredData)
-        setActiveTab(_activeTab)
-        console.log('clicked',role,activeTab)
-    }
-  }
   //search functionality will be removed later
-  const filtered = allGroupData.filter(item => item.name.toLowerCase().includes(deboundedVal.toLowerCase()))
-  //returns the tab count
-  const getTabCount = (_tab:string) => {
-        if (_tab === "all") {
-          return filtered?.length || 0
-        } else if (_tab === "mentor") {
-           return filtered.filter(item => item.role === _tab)?.length || 0
-        } else if (_tab === "mentee") {
-            return filtered.filter(item => item.role === _tab)?.length || 0
-         }   
+  
+  
+  const {data,isFetching,error,refetch} = useGetAllGroups('')
+
+  const filtered  = data?.groups?.filter(item => item.name.toLowerCase().includes(deboundedVal.toLowerCase())) 
+
+  if(error){
+    toast.error(error.message || "An Error occured while fetching data try again")
   }
   return (
     <Box as="main" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -283,7 +102,7 @@ const AdminGroupModules = () => {
                 <Bookmark size={34}/> Archive Groups
               </Button>
               <Button
-                onClick={() => {}}
+                onClick={() => setOpenAddGroupModal(true)}
                 className="flex  cursor-pointer"
               >
                 {" "}
@@ -292,33 +111,16 @@ const AdminGroupModules = () => {
             </Box>
           </Box>
 
-          {/* Tabs */}
-
-          {/* <Box>
-          <section className="overflow-x-scroll no-modal-scroll-track">
-          <section className="whitespace-nowrap flex px-4 gap-x-5 mt-5 w-full">
-            {userTabs.map((item) => (
-              <p
-                onClick={() => handleSelected(item.role,item.category)}
-                key={item.id}
-                className={`${
-                  item.category === activeTab
-                    ? "text-primary border-primary border-b-2"
-                    : "text-black border-white border-b-2"
-                } px-6 pb-2 text-center hover:text-primary cursor-pointer capitalize transition-color ease-in-out duration-500 h-[30px]`}
-              >
-                {item.category}({getTabCount(item.role)})
-              </p>
-            ))}
-          </section>
-        </section>
-          </Box> */}
           {/* Table */}
           <Box as="div">
-             <GroupsTable data={filtered || []} paginationState={paginationState} setPaginationState={setPaginationState}  refetch={() => {}} isLoadingData={false} totalItemsCount={filtered.length || 0}/>
+             <GroupsTable data={filtered || []} handleAddGroups={() => setOpenAddGroupModal(true)} paginationState={paginationState} setPaginationState={setPaginationState}  refetch={refetch} isLoadingData={isFetching} totalItemsCount={filtered?.length || 0}/>
           </Box>
         </Box>
       </Box>
+      <MainModal title="Add New Group"  open={openAddGroupModal} onClose={() => setOpenAddGroupModal(false)}>
+        <Box as="p" className="text-gray-500 text-sm">Create a new group account with the details below</Box>
+        <AddGroupsForm refetch={refetch} actionType="add" onClose={() => setOpenAddGroupModal(false)}/>
+      </MainModal>
     </Box>
   );
 };

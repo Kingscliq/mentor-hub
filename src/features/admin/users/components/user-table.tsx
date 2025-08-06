@@ -4,7 +4,7 @@ import {
   createColumnHelper,
 } from "@tanstack/react-table";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Table } from "@/components/ui/table";
 import {
   DropdownMenu,
@@ -16,15 +16,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { UserDataI } from "../users.module";
-import { CircleEllipsis, Eye, SquarePen, Users } from "lucide-react";
+import { CircleEllipsis, Ellipsis, Eye, SquarePen, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Box from "@/components/ui/box";
 import MainModal from "@/components/modals";
 import AddUserForm from "../widgets/add-user-form";
 import ConfirmationModal from "@/components/modals/confirmation-modal";
+import { CustomTable } from "@/components/ui/table/new-table";
+import { useRouter } from "next/navigation";
+import { UserResponse } from "../api";
 
-const columnHelper = createColumnHelper<UserDataI>();
+
+const columnHelper = createColumnHelper<UserResponse>();
 
 const UsersTable = ({
   data = [],
@@ -38,9 +41,12 @@ const UsersTable = ({
   searchTerm,
   refetch,
 }: {
-  data?: UserDataI[];
+  data?: UserResponse[];
   paginationState?: PaginationState;
-  setPaginationState?: (state: PaginationState) => void;
+  setPaginationState?:Dispatch<SetStateAction<{
+      pageIndex: number;
+      pageSize: number;
+  }>>;
   pageCount?: number;
   totalItemsCount: number;
   itemsPerPageOptions?: number[];
@@ -49,11 +55,12 @@ const UsersTable = ({
   refetch:() => void;
   handleAddUser:() => void
 }) => {
-  const [clickedItem, setClickedItem] = useState<UserDataI>();
+  const [clickedItem, setClickedItem] = useState<UserResponse>();
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeactivateModal, setOpenDeactivateModal] =
     useState<boolean>(false);
-
+ 
+    const router = useRouter()
   const getClickedRow = (_rowId: string) => {
     const clickedItem = data.find((item) => item._id === _rowId);
     setClickedItem(clickedItem);
@@ -62,6 +69,7 @@ const UsersTable = ({
   const handleOpenModal = (_rowId: string) => {
     getClickedRow(_rowId);
   };
+
 
   const stopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -77,7 +85,7 @@ const UsersTable = ({
         No User Created Yet
       </Box>
       <Box as="h6" className="text-gray-600 text-sm font-medium mb-4">
-        create a user new user
+        Create a new user
       </Box>
       <Button
         onClick={() => {}}
@@ -95,10 +103,18 @@ const UsersTable = ({
       header: () => <span className="text-xs">S/N</span>,
     }),
 
-    columnHelper.accessor("name", {
-      id: "name",
+    columnHelper.display({
+      id: "firstName",
       size: 100,
-      cell: (info) => info.getValue(),
+      cell: (info) => {
+        const row = info.row.original;
+        const firstName = row.firstName;
+        const lastName = row.lastName;
+
+        return(
+          <span>{firstName} {lastName}</span>
+        )
+      },
       header: () => <span className="text-xs uppercase">Name</span>,
     }),
 
@@ -114,22 +130,28 @@ const UsersTable = ({
       cell: (info) => info.getValue(),
       header: () => <span className="text-xs uppercase">Role</span>,
     }),
-    columnHelper.accessor("status", {
-      id: "status",
+    columnHelper.accessor("department", {
+      id: "department",
       size: 100,
-      cell: (info) => (
-        <Badge variant={info.getValue() as "completed"}>
-          {info.getValue()}
-        </Badge>
-      ),
-      header: () => <span className="text-xs uppercase">Status</span>,
-    }),
-    columnHelper.accessor("assigned_group", {
-      id: "assigned_group",
-      size: 120,
       cell: (info) => info.getValue(),
-      header: () => <span className="text-xs uppercase">Assigned Group</span>,
+      header: () => <span className="text-xs uppercase">Department</span>,
     }),
+    // columnHelper.accessor("status", {
+    //   id: "status",
+    //   size: 100,
+    //   cell: (info) => (
+    //     <Badge variant={info.getValue() as "completed"}>
+    //       {info.getValue()}
+    //     </Badge>
+    //   ),
+    //   header: () => <span className="text-xs uppercase">Status</span>,
+    // }),
+    // columnHelper.accessor("assigned_group", {
+    //   id: "assigned_group",
+    //   size: 120,
+    //   cell: (info) => info.getValue(),
+    //   header: () => <span className="text-xs uppercase">Assigned Group</span>,
+    // }),
 
     {
       id: "actions",
@@ -140,47 +162,43 @@ const UsersTable = ({
         const row_id = rowData._id;
 
         return (
-          <Box as="div" className="flex items-center gap-x-2">
-            <Box
-              className=" border rounded-md p-2 hover:bg-gray-100"
-              onClick={(e) => {
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="data-[state=open]:bg-muted cursor-pointer text-muted-foreground flex size-8"
+                  size="icon"
+                >
+                  <Ellipsis className="rotate-90"/>
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent >
+                  <DropdownMenuItem className="cursor-pointer" onClick={(e) => {
+                stopPropagation(e);
+                setClickedItem(rowData);
+                router.push(`/admin/users/${row_id}`)
+              }} > <Eye /> View</DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer" onClick={(e) => {
                 stopPropagation(e);
                 setOpenEditModal(true);
                 setClickedItem(rowData);
-              }}
-            >
-              <SquarePen />
-            </Box>
-            <Box
-              className=" border rounded-md cursor-not-allowed hover:bg-gray-100 p-2"
-              onClick={(e) => {
-                stopPropagation(e);
-                setClickedItem(rowData);
-              }}
-            >
-              <Eye />
-            </Box>
-            <Box
-              as="div"
-              onClick={(e) => {
+              }}><SquarePen />Edit</DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer" onClick={(e) => {
                 stopPropagation(e);
                 setOpenDeactivateModal(true);
                 setClickedItem(rowData);
-              }}
-            >
-              <Box as="h3" className="font-semibold hover:text-primary">
-                Deactivate
-              </Box>
-            </Box>
-          </Box>
+              }}>Deactivate</DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
         );
       },
     },
-  ] as Array<ColumnDef<UserDataI, unknown>>;
+  ] as Array<ColumnDef<UserResponse, unknown>>;
 
   return (
     <>
-      <Table
+      <CustomTable
         data={data}
         columns={columns}
         paginationState={paginationState}
@@ -220,7 +238,7 @@ const UsersTable = ({
         onClose={() => setOpenDeactivateModal(false)}
       >
         <ConfirmationModal
-          desc={`Are you sure you want to deactivate <span class="font-bold">${clickedItem?.name}</span> ? This will prevent them from accessing the system.`}
+          desc={`Are you sure you want to deactivate <span class="font-bold">${clickedItem?.firstName} ${clickedItem?.lastName}</span> ? This will prevent them from accessing the system.`}
           handleBtn1={() => setOpenDeactivateModal(false)}
           handleBtn2={() => {}}
           btn1Text="Cancel"

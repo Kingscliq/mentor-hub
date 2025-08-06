@@ -3,34 +3,38 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { addProjectSchema, addUserSchema } from "@/schema/auth";
+import { addGroupSchema, addProjectSchema, addUserSchema } from "@/schema/auth";
 import { Roles } from "@/types/features/auth";
 import { useFormik } from "formik";
-import { UserDataI } from "../users.module";
-import { UserResponse } from "../api";
+import { GroupDataI } from "../groups.module";
+import { GroupRecordsI, useCreateGroup } from "../api";
+import { toast } from "sonner";
+
 
 interface InitialValuesType {
   name: string;
-  email: string;
-  role: string;
+  maximum_size:number;
 }
 
-export interface AddUserFormProps {
+export interface AddGroupsFormProps {
   onClose: () => void;
   actionType: "edit" | "add";
-  userDetails?: UserResponse;
+  userDetails?: GroupRecordsI;
+  refetch:() => void
 }
-const AddUserForm: React.FC<AddUserFormProps> = ({
+const AddGroupsForm: React.FC<AddGroupsFormProps> = ({
   onClose,
   actionType,
   userDetails,
+  refetch,
 }) => {
   const initialValues: InitialValuesType = {
-    name: actionType === "edit" ? (userDetails?.firstName as string) : "",
-    email: actionType === "edit" ? (userDetails?.email as string) : "",
-    role: actionType === "edit" ? (userDetails?.role as string) : "",
+    name:actionType === "edit" ? (userDetails?.name as string) : "",
+    maximum_size:actionType === "edit" ? (userDetails?.maximumGroupSize as number) : 0,
   };
 
+
+  const createGroupMutation = useCreateGroup()
   const {
     values,
     handleChange,
@@ -41,10 +45,18 @@ const AddUserForm: React.FC<AddUserFormProps> = ({
     setFieldValue,
   } = useFormik<InitialValuesType>({
     initialValues,
-    validationSchema: addUserSchema,
+    validationSchema: addGroupSchema,
     onSubmit: () => {
-      console.log("formvalue", values);
-      onClose();
+      createGroupMutation.mutate({ name:values.name, maximumGroupSize:Number(values.maximum_size)}, {
+        onSuccess: (data) => {
+          toast.success(data.message || data.status);
+          refetch();
+          onClose();
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      });
     },
   });
   return (
@@ -52,7 +64,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({
       <Box className="mt-10" as="form" onSubmit={handleSubmit}>
         <Box as="section">
           <Input
-            label="Name"
+            label="Group Name"
             name="name"
             value={values.name}
             onChange={handleChange}
@@ -66,44 +78,18 @@ const AddUserForm: React.FC<AddUserFormProps> = ({
 
         <Box as="section" className="mt-5">
           <Input
-            label="Email"
-            name="email"
-            type="email"
-            value={values.email}
+            label="Maximum Size"
+            name="maximum_size"
+            type="maximum_size"
+            value={values.maximum_size}
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder=""
             error={
-              touched.email && errors.email ? String(errors.email) : undefined
+              touched.maximum_size && errors.maximum_size ? String(errors.maximum_size) : undefined
             }
           />
         </Box>
-
-        {/* Role Select */}
-        <Box as="section" className="mt-5">
-          <Box
-            as="label"
-            htmlFor="role"
-            className="text-sm font-medium text-gray-600 block mb-1"
-          >
-            Role
-          </Box>
-          <Select
-            value={values.role}
-            onChange={(value) => setFieldValue("role", value)}
-            options={[
-              { value: "supervisor", label: "Supervisor" },
-              { value: "student", label: "Student" },
-            ]}
-            placeholder="Choose a role"
-          ></Select>
-          {touched.role && errors.role && (
-            <Box as="p" className="text-sm text-red-500 mt-1">
-              {errors.role}
-            </Box>
-          )}
-        </Box>
-
         <Box
           as="section"
           className="flex flex-row items-center justify-between w-full mt-8"
@@ -115,16 +101,33 @@ const AddUserForm: React.FC<AddUserFormProps> = ({
           >
             Cancel
           </Button>
-          <Button
+
+          {
+            actionType === 'edit' && 
+
+            <Button
             type="submit"
+            loading={createGroupMutation.isPending}
             className=" bg-primary cursor-pointer text-white py-2 rounded hover:bg-blue-700 transition"
           >
-            {actionType === 'edit' ? "Edit" : "Create"}
+            {createGroupMutation.isPending ? "Editing" : "Edit"}
           </Button>
+          }
+           {
+            actionType === 'add' && 
+
+            <Button
+            type="submit"
+            loading={createGroupMutation.isPending}
+            className=" bg-primary cursor-pointer text-white py-2 rounded hover:bg-blue-700 transition"
+          >
+            {createGroupMutation.isPending ? "Creating" : "Create"}
+          </Button>
+          }
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default AddUserForm;
+export default AddGroupsForm;
