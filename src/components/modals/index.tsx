@@ -14,7 +14,7 @@ export interface MainModalI {
 const MainModal: React.FC<MainModalI> = ({ children,className,customWidth,onClose,title,open }) => {
   return (
   
-    <Box as="section" className={`h-full w-screen bg-opacity-40 bg-black/50 z-50 fixed ${open ? " top-0 opacity-100 " : "top-[80rem] opacity-10"} left-0  px-6 md:px-10 pointer-events-auto transition-all ease-in-out duration-700`}>
+    <Box as="section" className={`h-full w-screen bg-opacity-40 bg-black/50 z-50 fixed ${open ? " top-0 opacity-100 " : "top-[380rem] opacity-10"} left-0  px-6 md:px-10 pointer-events-auto transition-all ease-in-out duration-700`}>
       <Box style={{ maxHeight: 'calc(100vh - 4rem)' }} className="min-h-screen flex flex-col md:items-center justify-center  md:p-3 no-modal-scroll-track">  
        <Box className=" ">
        <Box

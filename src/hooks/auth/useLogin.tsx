@@ -3,14 +3,14 @@ import {
   LoginFormValues,
   LoginResponse,
 } from '@/types/features/auth';
-import { clearLocalStorage, client, urls } from '@/lib';
+import { clearLocalStorage, client, env, storeCookie, urls } from '@/lib';
 
-import { AxiosError } from 'axios';
-import { toast } from 'sonner';
 import { useAuthActions } from '@/hooks/auth/useAuthStore';
 import { useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export const useLogin = () => {
   const { setUser } = useAuthActions();
@@ -44,6 +44,9 @@ export const useLogin = () => {
           duration: 5000,
         }
       );
+      if (res?.token && typeof res?.token === 'string') {
+              storeCookie({ key: env.AUTH_TOKEN, value: res.token });
+            }
       if (res?.data?.user) {
         setUser(res.data.user);
       }
