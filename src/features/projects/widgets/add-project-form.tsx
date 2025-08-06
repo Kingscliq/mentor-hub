@@ -1,3 +1,4 @@
+import { AddProjectFormValues } from '@/types/features/projects';
 import Box from '@/components/ui/box';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -5,18 +6,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { addProjectSchema } from '@/schema/auth';
 import { useFormik } from 'formik';
 
-interface InitialValuesType {
-  projectTitle: string;
-  projectDescription: string;
-}
 const AddProjectForm = ({ onClose }: { onClose: () => void }) => {
-  const initialValues: InitialValuesType = {
-    projectTitle: '',
-    projectDescription: '',
+  const initialValues: AddProjectFormValues = {
+    topic: '',
+    description: '',
   };
 
   const { values, handleChange, handleSubmit, errors, touched, handleBlur } =
-    useFormik<InitialValuesType>({
+    useFormik<AddProjectFormValues>({
       initialValues,
       validationSchema: addProjectSchema,
       onSubmit: () => {
@@ -29,17 +26,14 @@ const AddProjectForm = ({ onClose }: { onClose: () => void }) => {
       <Box className="mt-5" as="form" onSubmit={handleSubmit}>
         <Box as="section">
           <Input
-            label="Project Title"
-            name="projectTitle"
-            value={values.projectTitle}
+            label="Project Topic"
+            name="topic"
+            value={values.topic}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder=""
-            customBorder="border-b"
+            placeholder="Enter Project Topic"
             error={
-              touched.projectTitle && errors.projectTitle
-                ? String(errors.projectTitle)
-                : undefined
+              touched.topic && errors.topic ? String(errors.topic) : undefined
             }
           />
         </Box>
@@ -48,19 +42,20 @@ const AddProjectForm = ({ onClose }: { onClose: () => void }) => {
           <Textarea
             label="Project Description"
             name="projectDescription"
-            value={values.projectDescription}
+            value={values.description}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder=""
-            customBorder="border-b"
+            placeholder="Enter Project Descrition"
             error={
-              touched.projectDescription && errors.projectDescription
-                ? String(errors.projectDescription)
+              touched.description && errors.description
+                ? String(errors.description)
                 : undefined
             }
           />
           <Box as="div" className="flex flex-col items-end w-full ml-auto">
-            <Box as="p">{values.projectDescription.length}/500</Box>
+            <Box as="p" className="text-xs">
+              {values.description.length}/500
+            </Box>
           </Box>
         </Box>
 
@@ -77,7 +72,7 @@ const AddProjectForm = ({ onClose }: { onClose: () => void }) => {
           </Button>
           <Button
             type="submit"
-            className=" bg-primary cursor-pointer text-white py-2 rounded hover:bg-blue-700 transition"
+            className="flex ml-auto cursor-pointer bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
             Submit
           </Button>

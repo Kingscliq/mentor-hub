@@ -1,9 +1,15 @@
-import { useAuthActions } from '@/hooks/auth/useAuthStore';
+import {
+  AuthErrorResponse,
+  LoginFormValues,
+  LoginResponse,
+} from '@/types/features/auth';
 import { clearLocalStorage, client, env, storeCookie, urls } from '@/lib';
-import { LoginFormValues, LoginResponse } from '@/types/features/auth';
-import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+
+import { useAuthActions } from '@/hooks/auth/useAuthStore';
 import { useCallback } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 export const useLogin = () => {
@@ -21,8 +27,12 @@ export const useLogin = () => {
     mutate: loginUser,
     data: loginResponse,
     isPending: isLoading,
-  } = useMutation<LoginResponse, Error, LoginFormValues>({
-    mutationKey: ['register-mutation'],
+  } = useMutation<
+    LoginResponse,
+    AxiosError<AuthErrorResponse>,
+    LoginFormValues
+  >({
+    mutationKey: ['login-mutation'],
     mutationFn: async (userData: LoginFormValues) => {
       const res = await client.post(urls.LOGIN, userData);
       return res.data;
@@ -44,8 +54,10 @@ export const useLogin = () => {
     },
     onError: err => {
       toast(
-        `Registration failed: ${
-          err instanceof Error ? err.message : 'Something went wrong!!!'
+        `Login failed: ${
+          typeof err?.response?.data?.message === 'string'
+            ? err?.response?.data?.message
+            : 'Something went wrong!!!'
         }`,
         {
           duration: 5000,
