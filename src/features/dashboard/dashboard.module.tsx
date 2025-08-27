@@ -17,6 +17,7 @@ import { RecentProjects } from '../dashboard/widgets/recent-projects';
 import { QuickActions } from '../dashboard/components/quick-actions';
 import { useAuth } from '@/hooks/auth/useAuthStore';
 import { AdminRecentActivity } from './components/admin/admin-recent-activity';
+import { Roles } from '@/types/features/auth';
 
 export const DashboardModule = () => {
   // TODO: this is a dummy user will be removed once we start API integration
@@ -153,7 +154,7 @@ export const DashboardModule = () => {
 
        {/* Recent Projects & Recent Activity for mentors and mentee*/}
        {
-        user?.role && user.role !== 'admin' && (
+        user?.role !== Roles.ADMIN && (
           <>
           <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <RecentProjects />
@@ -168,7 +169,7 @@ export const DashboardModule = () => {
        }
 
        {
-        user.role === 'admin' && 
+        user?.role === Roles.ADMIN && 
          (
           <AdminRecentActivity/>
          )     
