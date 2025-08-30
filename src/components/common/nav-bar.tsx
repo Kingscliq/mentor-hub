@@ -11,10 +11,10 @@ import {
   MessageSquare,
   Settings,
   Book,
+  Users,
 } from 'lucide-react';
 import Link from 'next/link';
 import Box from '@/components/ui/box';
-// import { user } from '@/features';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/auth/useAuthStore';
 import { Role, Roles } from '@/types/features/auth';
@@ -44,6 +44,7 @@ const Header: React.FC = () => {
       { path: '/dashboard', label: 'Dashboard', icon: GraduationCap },
       { path: '/messages', label: 'Messages', icon: MessageSquare },
       { path: '/projects', label: 'Projects', icon: Book },
+      { path: '/groups', label: 'Groups', icon: Users},
     ];
 
     if (user?.role === Roles.ADMIN) {

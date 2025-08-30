@@ -41,7 +41,7 @@ const AddProjectForm = ({ onClose }: { onClose: () => void }) => {
         <Box as="section" className="mt-5">
           <Textarea
             label="Project Description"
-            name="projectDescription"
+            name="description"
             value={values.description}
             onChange={handleChange}
             onBlur={handleBlur}
