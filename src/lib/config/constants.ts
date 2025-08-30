@@ -10,6 +10,7 @@ export const urls = {
   USER_PROFILE: `${env.API_V1}auth/profile`,
   RESEND_OTP: `${env.API_V1}auth/resend-otp`,
   VERIFY_EMAIL: `${env.API_V1}auth/verify-email`,
+  PROJECTS: `${env.API_V1}/projects/`,
 };
 
 export const user = {

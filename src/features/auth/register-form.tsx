@@ -1,18 +1,18 @@
 'use client';
 
-import { useFormik } from 'formik';
-import { registerValidationSchema } from '@/schema/auth/register.schema';
-import { RegisterFormValues, Roles } from '@/types/features/auth';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Select } from '@/components/ui/select';
-import { Mail, Lock, Phone, User, GraduationCap } from 'lucide-react';
-import Link from 'next/link';
-import Box from '@/components/ui/box';
-
-import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react'; // for toggle icons
+import { GraduationCap, Lock, Mail, Phone, User } from 'lucide-react';
+import { RegisterFormValues, Roles } from '@/types/features/auth';
+
+import Box from '@/components/ui/box';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import Link from 'next/link';
+import { Select } from '@/components/ui/select';
+import { registerValidationSchema } from '@/schema/auth/register.schema';
+import { useFormik } from 'formik';
 import { useRegister } from '@/hooks/auth';
+import { useState } from 'react';
 
 const initialValues: RegisterFormValues = {
   role: '',
@@ -160,6 +160,7 @@ export default function Register() {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder="Your Academic Year"
+                type="number"
                 error={
                   touched.academicYear && errors.academicYear
                     ? String(errors.academicYear)

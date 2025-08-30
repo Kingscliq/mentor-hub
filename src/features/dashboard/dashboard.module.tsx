@@ -16,6 +16,8 @@ import { RecentActivityList } from '../dashboard/widgets/recent-activity-lists';
 import { RecentProjects } from '../dashboard/widgets/recent-projects';
 import { QuickActions } from '../dashboard/components/quick-actions';
 import { useAuth } from '@/hooks/auth/useAuthStore';
+import { AdminRecentActivity } from './components/admin/admin-recent-activity';
+import { Roles } from '@/types/features/auth';
 
 export const DashboardModule = () => {
   // TODO: this is a dummy user will be removed once we start API integration
@@ -27,20 +29,24 @@ export const DashboardModule = () => {
       value: string | number;
       icon: React.ElementType;
       color: string;
+      url?:string
     }>
   > = {
-    mentee: [
+    student: [
       {
-        name: 'Active Projects',
+        name: 'Active Groups',
         value: 5,
         icon: BookOpen,
         color: 'bg-blue-500',
+          url:'/groups'
+        
       },
       {
         name: 'Completed Milestones',
         value: 10,
         icon: CheckCircle,
         color: 'bg-green-500',
+        url:'/projects'
       },
       {
         name: 'Pending Reviews',
@@ -55,12 +61,13 @@ export const DashboardModule = () => {
         color: 'bg-purple-500',
       },
     ],
-    mentor: [
+    supervisor: [
       {
         name: 'Active Mentees',
         value: 4,
         icon: Users,
         color: 'bg-emerald-500',
+        
       },
       {
         name: 'Projects Supervised',
@@ -83,25 +90,27 @@ export const DashboardModule = () => {
     ],
     admin: [
       {
-        name: 'Total Projects',
-        value: 12,
+        name: 'Total Groups',
+        value: 5,
         icon: BookOpen,
         color: 'bg-indigo-500',
+         url:'/admin/groups'
       },
       {
-        name: 'Active Matches',
-        value: 6,
+        name: 'Total Users',
+        value: 2,
         icon: Users,
         color: 'bg-emerald-500',
+        url:'/admin/users'
       },
       {
-        name: 'Completion Rate',
+        name: 'Pending Approvals',
         value: '75%',
         icon: TrendingUp,
         color: 'bg-green-500',
       },
       {
-        name: 'Pending Approvals',
+        name: 'Archived Groups',
         value: 1,
         icon: Clock,
         color: 'bg-amber-500',
@@ -137,20 +146,36 @@ export const DashboardModule = () => {
               color={stat.color}
               name={stat.name}
               value={stat.value}
+              url={stat.url}
             />
           );
         })}
-      </Box>
+       </Box>
 
-      {/* Recent Projects & Recent Activity */}
-      <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <RecentProjects />
-        <RecentActivityList />
-      </Box>
-      {/* Quick Actions */}
-      <Box as="section" className="mt-8">
-        <QuickActions />
-      </Box>
+       {/* Recent Projects & Recent Activity for mentors and mentee*/}
+       {
+        user?.role !== Roles.ADMIN && (
+          <>
+          <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <RecentProjects />
+          <RecentActivityList />
+          </Box>
+           {/* Quick Actions */}
+          <Box as="section" className="mt-8">
+              <QuickActions />
+          </Box>
+          </>
+        )
+       }
+
+       {
+        user?.role === Roles.ADMIN && 
+         (
+          <AdminRecentActivity/>
+         )     
+       }
+
+     
     </Box>
   );
 };

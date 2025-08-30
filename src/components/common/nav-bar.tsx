@@ -10,6 +10,7 @@ import {
   GraduationCap,
   MessageSquare,
   Settings,
+  Book,
 } from 'lucide-react';
 import Link from 'next/link';
 import Box from '@/components/ui/box';
@@ -42,6 +43,7 @@ const Header: React.FC = () => {
     const baseItems = [
       { path: '/dashboard', label: 'Dashboard', icon: GraduationCap },
       { path: '/messages', label: 'Messages', icon: MessageSquare },
+      { path: '/projects', label: 'Projects', icon: Book },
     ];
 
     if (user?.role === Roles.ADMIN) {
