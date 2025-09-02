@@ -48,192 +48,193 @@ export default function Register() {
   } = formik;
 
   return (
-    <Box as="section" className="min-h-screen bg-white py-10 px-4">
-      <Box as="div" className="max-w-md mx-auto p-12 shadow-lg rounded-xl">
-        <Box as="form" onSubmit={handleSubmit} className="space-y-4">
-          {/* Role Select */}
-          <Box as="div">
-            <Box
-              as="label"
-              htmlFor="role"
-              className="text-sm font-medium text-gray-600 block mb-1"
-            >
-              Role
-            </Box>
-            <Select
-              value={values.role}
-              onChange={value => setFieldValue('role', value)}
-              options={[
-                { value: Roles.SUPERVISOR, label: 'Supervisor' },
-                { value: Roles.STUDENT, label: 'Student' },
-              ]}
-              placeholder="Choose a role"
-            ></Select>
-            {touched.role && errors.role && (
-              <Box as="p" className="text-sm text-red-500 mt-1">
-                {errors.role}
-              </Box>
-            )}
-          </Box>
-
-          <Input
-            label="First Name"
-            name="firstName"
-            iconLeft={<User className="w-4 h-4" />}
-            value={values.firstName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder="Your First Name"
-            error={
-              touched.firstName && errors.firstName
-                ? String(errors.firstName)
-                : undefined
-            }
-          />
-
-          <Input
-            label="Last Name"
-            name="lastName"
-            iconLeft={<User className="w-4 h-4" />}
-            value={values.lastName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder="Your Last Name"
-            error={
-              touched.lastName && errors.lastName
-                ? String(errors.lastName)
-                : undefined
-            }
-          />
-
-          <Input
-            label="Institutional Email"
-            name="email"
-            type="email"
-            iconLeft={<Mail className="w-4 h-4" />}
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder="Your email address"
-            error={
-              touched.email && errors.email ? String(errors.email) : undefined
-            }
-          />
-
-          <Input
-            label="Department"
-            name="department"
-            iconLeft={<GraduationCap className="w-4 h-4" />}
-            value={values.department}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder="Your Department"
-            error={
-              touched.department && errors.department
-                ? String(errors.department)
-                : undefined
-            }
-          />
-
-          {/* Only show if mentee */}
-          {values.role === Roles.STUDENT && (
-            <>
-              <Input
-                label="Matric Number"
-                name="matricNumber"
-                iconLeft={<GraduationCap className="w-4 h-4" />}
-                value={values.matricNumber}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Your Matric Number"
-                error={
-                  touched.matricNumber && errors.matricNumber
-                    ? String(errors.matricNumber)
-                    : undefined
-                }
-              />
-              <Input
-                label="Academic Year"
-                name="academicYear"
-                iconLeft={<GraduationCap className="w-4 h-4" />}
-                value={values.academicYear}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder="Your Academic Year"
-                type="number"
-                error={
-                  touched.academicYear && errors.academicYear
-                    ? String(errors.academicYear)
-                    : undefined
-                }
-              />
-            </>
-          )}
-
-          <Input
-            label="Phone Number"
-            name="phoneNumber"
-            type="number"
-            iconLeft={<Phone className="w-4 h-4" />}
-            value={values.phoneNumber}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder="Your Phone Number"
-            error={
-              touched.phoneNumber && errors.phoneNumber
-                ? String(errors.phoneNumber)
-                : undefined
-            }
-          />
-
-          <Input
-            label="Password"
-            name="password"
-            type={showPassword ? 'text' : 'password'}
-            iconLeft={<Lock className="w-4 h-4 " />}
-            iconRight={
-              <Button
-                type="button"
-                onClick={() => setShowPassword(prev => !prev)}
-                className="bg-transparent text-gray-400 hover:bg-transparent cursor-pointer"
-              >
-                {showPassword ? (
-                  <EyeOff className="w-4 h-4" />
-                ) : (
-                  <Eye className="w-4 h-4" />
-                )}
-              </Button>
-            }
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder="Your Password"
-            error={
-              touched.password && errors.password
-                ? String(errors.password)
-                : undefined
-            }
-          />
-
-          <Button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-            loading={isRegistering}
+    <Box as="div" className="lg:w-lg mx-auto p-4 lg:p-12 shadow-lg rounded-xl">
+      <Box as="h2" className="text-2xl font-bold text-center mb-12">
+        Register new Account
+      </Box>
+      <Box as="form" onSubmit={handleSubmit} className="space-y-4">
+        {/* Role Select */}
+        <Box as="div">
+          <Box
+            as="label"
+            htmlFor="role"
+            className="text-sm font-medium text-gray-600 block mb-1"
           >
-            Create Account
-          </Button>
+            Role
+          </Box>
+          <Select
+            value={values.role}
+            onChange={value => setFieldValue('role', value)}
+            options={[
+              { value: Roles.SUPERVISOR, label: 'Supervisor' },
+              { value: Roles.STUDENT, label: 'Student' },
+            ]}
+            placeholder="Choose a role"
+          ></Select>
+          {touched.role && errors.role && (
+            <Box as="p" className="text-sm text-red-500 mt-1">
+              {errors.role}
+            </Box>
+          )}
         </Box>
 
-        <Box as="div" className="mt-6 text-center">
-          <Box as="p" className="text-sm text-gray-600">
-            Already have an account?{' '}
-            <Link
-              href="/login"
-              className="font-medium text-blue-600 hover:text-blue-500"
+        <Input
+          label="First Name"
+          name="firstName"
+          iconLeft={<User className="w-4 h-4" />}
+          value={values.firstName}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Your First Name"
+          error={
+            touched.firstName && errors.firstName
+              ? String(errors.firstName)
+              : undefined
+          }
+        />
+
+        <Input
+          label="Last Name"
+          name="lastName"
+          iconLeft={<User className="w-4 h-4" />}
+          value={values.lastName}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Your Last Name"
+          error={
+            touched.lastName && errors.lastName
+              ? String(errors.lastName)
+              : undefined
+          }
+        />
+
+        <Input
+          label="Institutional Email"
+          name="email"
+          type="email"
+          iconLeft={<Mail className="w-4 h-4" />}
+          value={values.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Your email address"
+          error={
+            touched.email && errors.email ? String(errors.email) : undefined
+          }
+        />
+
+        <Input
+          label="Department"
+          name="department"
+          iconLeft={<GraduationCap className="w-4 h-4" />}
+          value={values.department}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Your Department"
+          error={
+            touched.department && errors.department
+              ? String(errors.department)
+              : undefined
+          }
+        />
+
+        {/* Only show if mentee */}
+        {values.role === Roles.STUDENT && (
+          <>
+            <Input
+              label="Matric Number"
+              name="matricNumber"
+              iconLeft={<GraduationCap className="w-4 h-4" />}
+              value={values.matricNumber}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Your Matric Number"
+              error={
+                touched.matricNumber && errors.matricNumber
+                  ? String(errors.matricNumber)
+                  : undefined
+              }
+            />
+            <Input
+              label="Academic Year"
+              name="academicYear"
+              iconLeft={<GraduationCap className="w-4 h-4" />}
+              value={values.academicYear}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Your Academic Year"
+              type="number"
+              error={
+                touched.academicYear && errors.academicYear
+                  ? String(errors.academicYear)
+                  : undefined
+              }
+            />
+          </>
+        )}
+
+        <Input
+          label="Phone Number"
+          name="phoneNumber"
+          type="number"
+          iconLeft={<Phone className="w-4 h-4" />}
+          value={values.phoneNumber}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Your Phone Number"
+          error={
+            touched.phoneNumber && errors.phoneNumber
+              ? String(errors.phoneNumber)
+              : undefined
+          }
+        />
+
+        <Input
+          label="Password"
+          name="password"
+          type={showPassword ? 'text' : 'password'}
+          iconLeft={<Lock className="w-4 h-4 " />}
+          iconRight={
+            <Button
+              type="button"
+              onClick={() => setShowPassword(prev => !prev)}
+              className="bg-transparent text-gray-400 hover:bg-transparent cursor-pointer"
             >
-              Sign in here
-            </Link>
-          </Box>
+              {showPassword ? (
+                <EyeOff className="w-4 h-4" />
+              ) : (
+                <Eye className="w-4 h-4" />
+              )}
+            </Button>
+          }
+          value={values.password}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="Your Password"
+          error={
+            touched.password && errors.password
+              ? String(errors.password)
+              : undefined
+          }
+        />
+
+        <Button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          loading={isRegistering}
+        >
+          Create Account
+        </Button>
+      </Box>
+
+      <Box as="div" className="mt-6 text-center">
+        <Box as="p" className="text-sm text-gray-600">
+          Already have an account?{' '}
+          <Link
+            href="/login"
+            className="font-medium text-blue-600 hover:text-blue-500"
+          >
+            Sign in here
+          </Link>
         </Box>
       </Box>
     </Box>

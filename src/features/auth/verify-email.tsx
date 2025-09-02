@@ -31,10 +31,13 @@ const VerifyEmail = () => {
   const { resendOtp, isResending } = useVerifyEmail();
 
   return (
-    <Box as="section" className="h-screen bg-white py-10 px-4">
-      <Box as="div" className="max-w-md mx-auto p-12 shadow-lg rounded-xl">
+    <Box as="section" className="">
+      <Box
+        as="div"
+        className="lg:w-lg mx-auto p-4 lg:p-12 shadow-lg rounded-xl"
+      >
         <Box as="form" onSubmit={handleSubmit} className="space-y-4">
-          <Box as="h2" className="text-lg font-bold text-center">
+          <Box as="h2" className="text-2xl font-bold text-center">
             Email Verification
           </Box>
           <Box as="p" className="text-xs text-center">
