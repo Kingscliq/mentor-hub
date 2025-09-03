@@ -1,11 +1,11 @@
 import Box from '@/components/ui/box';
-import { ActionTypeI, MenteeProjectsDataI } from '../../projects.module';
+import { IActionType, IMenteeProjectsData } from '@/types/features/projects';
 import { Card } from '@/components/ui/card';
 import MentorsProjectCard from './projects-card';
 
 export interface MentorsProjectsProps {
-  projects: MenteeProjectsDataI[];
-  handleOpenProjectReview: (val: ActionTypeI, projectId: string) => void;
+  projects: IMenteeProjectsData[];
+  handleOpenProjectReview: (val: IActionType, projectId: string) => void;
 }
 const MentorsProject: React.FC<MentorsProjectsProps> = ({
   projects,

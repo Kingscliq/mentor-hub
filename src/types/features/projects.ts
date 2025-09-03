@@ -7,7 +7,7 @@ export type AddProjectPayload = {
   groupId: string;
 } & AddProjectFormValues;
 
-export type ActionTypeI = 'approve' | 'reject';
+export type IActionType = 'approve' | 'reject';
 
 export interface IMenteeProjectsData {
   _id: string;

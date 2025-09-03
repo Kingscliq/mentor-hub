@@ -1,33 +1,33 @@
-"use client";
+'use client';
 
-import Box from "@/components/ui/box";
-import { ChevronLeft } from "lucide-react";
-import Image from "next/image";
-import { user1 } from "../../../../../public";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui";
-import { useState } from "react";
-import ProfileInformation from "./profile-information";
-import ActiveInformation from "./active-information";
-import GroupInformation from "./group-information";
+import Box from '@/components/ui/box';
+import { ChevronLeft } from 'lucide-react';
+import Image from 'next/image';
+import { user1 } from '../../../../../public';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui';
+import { useState } from 'react';
+import ProfileInformation from './profile-information';
+import ActiveInformation from './active-information';
+import GroupInformation from './group-information';
 
 export const userTabs = [
   {
-    id: "1",
-    category: "profile information",
+    id: '1',
+    category: 'profile information',
   },
   {
-    id: "2",
-    category: "active information",
+    id: '2',
+    category: 'active information',
   },
   {
-    id: "3",
-    category: "group information",
+    id: '3',
+    category: 'group information',
   },
 ];
 
-const AdminUserDetails = ({ params }: { params: string }) => {
-  const [activeTab, setActiveTab] = useState("profile information");
+const AdminUserDetails = () => {
+  const [activeTab, setActiveTab] = useState('profile information');
 
   const handleSelected = (_activeTab: string) => {
     setActiveTab(_activeTab);
@@ -35,14 +35,14 @@ const AdminUserDetails = ({ params }: { params: string }) => {
 
   const renderComponent = () => {
     switch (activeTab) {
-      case "profile information":
-        return <ProfileInformation/>;
+      case 'profile information':
+        return <ProfileInformation />;
         break;
-      case "active information":
-        return <ActiveInformation/>;
+      case 'active information':
+        return <ActiveInformation />;
         break;
-      case "group information":
-        return <GroupInformation/>;
+      case 'group information':
+        return <GroupInformation />;
         break;
       default:
         break;
@@ -102,14 +102,14 @@ const AdminUserDetails = ({ params }: { params: string }) => {
               as="section"
               className="whitespace-nowrap flex px-4 gap-x-5 mt-5 w-full"
             >
-              {userTabs.map((item) => (
+              {userTabs.map(item => (
                 <p
                   onClick={() => handleSelected(item.category)}
                   key={item.id}
                   className={`${
                     item?.category === activeTab
-                      ? "text-primary border-primary border-b-2"
-                      : "text-black border-white border-b-2"
+                      ? 'text-primary border-primary border-b-2'
+                      : 'text-black border-white border-b-2'
                   } px-6 pb-2 text-center hover:text-primary cursor-pointer capitalize transition-color ease-in-out duration-500 h-[30px]`}
                 >
                   {item.category}

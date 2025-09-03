@@ -5,11 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 import { user1 } from '../../../../../public/images';
-import { ActionTypeI } from '../../projects.module';
+import { IActionType } from '@/types/features/projects';
 
 interface MentorsProjectsCardI {
   item: number;
-  handleOpenProjectReview: (val: ActionTypeI, projectId: string) => void;
+  handleOpenProjectReview: (val: IActionType, projectId: string) => void;
 }
 const MentorsProjectCard: React.FC<MentorsProjectsCardI> = ({
   item,

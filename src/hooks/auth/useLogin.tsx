@@ -33,6 +33,7 @@ export const useLogin = () => {
     LoginFormValues
   >({
     mutationKey: ['login-mutation'],
+    // TODO: separate mutation functions from their calls
     mutationFn: async (userData: LoginFormValues) => {
       const res = await client.post(urls.LOGIN, userData);
       return res.data;
@@ -45,8 +46,8 @@ export const useLogin = () => {
         }
       );
       if (res?.token && typeof res?.token === 'string') {
-              storeCookie({ key: env.AUTH_TOKEN, value: res.token });
-            }
+        storeCookie({ key: env.AUTH_TOKEN, value: res.token });
+      }
       if (res?.data?.user) {
         setUser(res.data.user);
       }
