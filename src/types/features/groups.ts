@@ -1,3 +1,4 @@
+import { ResponseStatus } from '@/types/features/auth';
 import { StaticImageData } from 'next/image';
 
 // export interface GroupModulesI {}
@@ -27,13 +28,32 @@ export interface GroupsDetailsI {
   }[];
 }
 
-export interface IGroups {
+export interface GroupErrorResponse {
+  status: ResponseStatus;
+  message: string;
+}
+
+export interface ICreateGroupPayload {
+  name: string;
+  maximumGroupSize: number;
+}
+
+export interface IGroupRecords {
+  createdAt: string;
+  maximumGroupSize: number;
+  name: string;
+  users: string[];
+  _id: string;
+}
+export interface GroupDataResponse {
+  groups: IGroupsList[];
+}
+
+export interface IGroupsList {
   users: string[];
   _id: string;
   name: string;
   maximumGroupSize: number;
   createdAt: string;
   updatedAt: string;
-  __v: string;
-  supervisor: string;
 }

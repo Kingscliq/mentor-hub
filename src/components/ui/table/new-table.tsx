@@ -13,9 +13,9 @@ import {
   SortingState,
   useReactTable,
   VisibilityState,
-} from "@tanstack/react-table";
-import { Dispatch, JSX, ReactNode, SetStateAction, useId, useMemo, useState } from "react";
-import { Tabs, TabsContent } from "../tabs";
+} from '@tanstack/react-table';
+import { Dispatch, JSX, ReactNode, SetStateAction, useState } from 'react';
+import { Tabs, TabsContent } from '../tabs';
 import {
   Table,
   TableBody,
@@ -23,26 +23,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../table";
-import {
-  Select
-} from "../select";
-import { Button } from "../button";
-import { ChevronLeft, ChevronRight, ChevronsRight } from "lucide-react";
-import { Label } from "../label";
-import Box from "../box";
-import TableSkeletonLoader from "./tableskeleton-loader";
-import LoadingBar from "../page-loader/horizontal-loader";
+} from '../table';
+import { Select } from '../select';
+import { Button } from '../button';
+import { ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-react';
+import { Label } from '../label';
+import TableSkeletonLoader from './tableskeleton-loader';
+import LoadingBar from '../page-loader/horizontal-loader';
 
 export interface TableProps<T extends RowData> {
   columns: ColumnDef<T, unknown>[];
   pageCount?: number;
   children?: ReactNode;
   paginationState?: PaginationState;
-  setPaginationState?: Dispatch<SetStateAction<{
-    pageIndex: number;
-    pageSize: number;
-}>>;
+  setPaginationState?: Dispatch<
+    SetStateAction<{
+      pageIndex: number;
+      pageSize: number;
+    }>
+  >;
   data: T[];
   totalItemsCount: number;
   customHeaderContainerClass?: string;
@@ -55,24 +54,30 @@ export interface TableProps<T extends RowData> {
   rowClickable?: string;
   searchTerm?: string;
   openModal?: boolean;
-  handleOpenModal?: any;
+  handleOpenModal?: (val: string) => void;
   subsequentLoad?: boolean;
-  showClickable?: any;
   customEmptyState: JSX.Element;
 }
 
-export function CustomTable<T extends RowData>({ data, columns,customEmptyState,isLoadingData,setPaginationState,paginationState }: TableProps<T>) {
+export function CustomTable<T extends RowData>({
+  data,
+  columns,
+  customEmptyState,
+  isLoadingData,
+  setPaginationState,
+  paginationState,
+}: TableProps<T>) {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
 
-//   Use this without server pagination
-//   const [pagination, setPagination] = useState({
-//     pageIndex: 0,
-//     pageSize: 10,
-//   });
- 
+  //   Use this without server pagination
+  //   const [pagination, setPagination] = useState({
+  //     pageIndex: 0,
+  //     pageSize: 10,
+  //   });
+
   const table = useReactTable({
     data,
     columns,
@@ -81,13 +86,13 @@ export function CustomTable<T extends RowData>({ data, columns,customEmptyState,
       columnVisibility,
       rowSelection,
       columnFilters,
-      pagination:{
+      pagination: {
         pageSize: (paginationState?.pageSize as number) || 30,
-        pageIndex: paginationState?.pageIndex as number || 0,
+        pageIndex: (paginationState?.pageIndex as number) || 0,
       },
     },
     // getRowId: (row) => row.id.toString(),
-    manualPagination:true,
+    manualPagination: true,
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
@@ -111,9 +116,7 @@ export function CustomTable<T extends RowData>({ data, columns,customEmptyState,
       defaultValue="outline"
       className="w-full flex-col justify-start gap-6 "
     >
-        {
-        (isLoadingData && data.length > 1) && <LoadingBar/>
-    }
+      {isLoadingData && data.length > 1 && <LoadingBar />}
       <TabsContent
         value="outline"
         className="relative flex flex-col gap-4 overflow-auto mt-10"
@@ -121,9 +124,9 @@ export function CustomTable<T extends RowData>({ data, columns,customEmptyState,
         <div className="overflow-hidden rounded-lg border">
           <Table>
             <TableHeader className="bg-muted sticky top-0 z-10">
-              {table.getHeaderGroups().map((headerGroup) => (
+              {table.getHeaderGroups().map(headerGroup => (
                 <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
+                  {headerGroup.headers.map(header => {
                     return (
                       <TableHead key={header.id} colSpan={header.colSpan}>
                         {header.isPlaceholder
@@ -140,19 +143,21 @@ export function CustomTable<T extends RowData>({ data, columns,customEmptyState,
             </TableHeader>
             <TableBody className="**:data-[slot=table-cell]:first:w-8">
               {table.getRowModel().rows?.length ? (
-                 
-                    table.getRowModel().rows.map((row) => (
-                      <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                      >
-                        {row.getVisibleCells().map((cell) => (
-                          <TableCell key={cell.id}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))
+                table.getRowModel().rows.map(row => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
+                    {row.getVisibleCells().map(cell => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
               ) : (
                 <TableRow>
                   <TableCell
@@ -173,7 +178,10 @@ export function CustomTable<T extends RowData>({ data, columns,customEmptyState,
           </div>
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">
-              <Label htmlFor="rows-per-page" className="text-sm w-full whitespace-nowrap font-medium">
+              <Label
+                htmlFor="rows-per-page"
+                className="text-sm w-full whitespace-nowrap font-medium"
+              >
                 Rows per page
               </Label>
               <Select
@@ -182,16 +190,16 @@ export function CustomTable<T extends RowData>({ data, columns,customEmptyState,
                   table.setPageSize(Number(value));
                 }}
                 options={[
-                  { value: "10", label: "10" },
-                  { value: "20", label: "20" },
-                  { value: "30", label: "30" },
-                  { value: "40", label: "40" },
+                  { value: '10', label: '10' },
+                  { value: '20', label: '20' },
+                  { value: '30', label: '30' },
+                  { value: '40', label: '40' },
                 ]}
                 placeholder={String(table.getState().pagination.pageSize)}
               ></Select>
             </div>
             <div className="flex w-fit items-center justify-center text-sm font-medium">
-              Page {table.getState().pagination.pageIndex + 1} of{" "}
+              Page {table.getState().pagination.pageIndex + 1} of{' '}
               {table.getPageCount()}
             </div>
             <div className="ml-auto flex items-center gap-2 lg:ml-0">
@@ -202,7 +210,7 @@ export function CustomTable<T extends RowData>({ data, columns,customEmptyState,
                 disabled={!table.getCanPreviousPage()}
               >
                 <span className="sr-only">Go to first page</span>
-                <ChevronsRight className="rotate-180"/>
+                <ChevronsRight className="rotate-180" />
               </Button>
               <Button
                 variant="outline"
@@ -232,7 +240,7 @@ export function CustomTable<T extends RowData>({ data, columns,customEmptyState,
                 disabled={!table.getCanNextPage()}
               >
                 <span className="sr-only">Go to last page</span>
-                <ChevronsRight/>
+                <ChevronsRight />
               </Button>
             </div>
           </div>

@@ -39,8 +39,9 @@ const MiniProfileCard: React.FC<MiniProfileCardI> = ({
           </Box>
 
           <Box as="div" className="flex flex-col gap-y-5">
-            {typeof userGroup?.users !== null &&
-              Array.isArray(userGroup?.users) &&
+            {userGroup?.users !== null &&
+            typeof userGroup?.users !== 'undefined' &&
+            Array.isArray(userGroup?.users) ? (
               userGroup.users.map((user: User) => (
                 <Box as="div" key={user._id} data-aos="fade-up">
                   <UserProfileCard
@@ -50,7 +51,10 @@ const MiniProfileCard: React.FC<MiniProfileCardI> = ({
                     userType={user.role ?? '-'}
                   />
                 </Box>
-              ))}
+              ))
+            ) : (
+              <div>Loading...</div>
+            )}
           </Box>
         </Box>
       </Box>

@@ -3,17 +3,18 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { approveProjectSchema } from '@/schema/auth';
 import { useFormik } from 'formik';
-import { ActionTypeI } from '../projects.module';
+import { IActionType } from '@/types/features/projects';
 
 interface InitialValuesType {
   comment: string;
 }
+
 const ApproveProjectForm = ({
   onClose,
   actionType,
 }: {
   onClose: () => void;
-  actionType?: ActionTypeI;
+  actionType?: IActionType;
 }) => {
   const initialValues: InitialValuesType = {
     comment: '',

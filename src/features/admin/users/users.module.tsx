@@ -1,14 +1,13 @@
-import { Button, Input } from "@/components/ui";
-import Box from "@/components/ui/box";
-import Search from "@/components/ui/search";
-import { Bookmark, ChevronLeft, Plus } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { UsersTable } from "./components/user-table";
-import { PaginationState } from "@tanstack/react-table";
-import useDebounce from "@/hooks/dashboard";
-import MainModal from "@/components/modals";
-import AddUserForm from "./widgets/add-user-form";
-import { useGetAllUsers, UserResponse } from "./api";
+import Box from '@/components/ui/box';
+import Search from '@/components/ui/search';
+import { ChevronLeft } from 'lucide-react';
+import React, { useState } from 'react';
+import { UsersTable } from './components/user-table';
+import { PaginationState } from '@tanstack/react-table';
+import useDebounce from '@/hooks/dashboard';
+import MainModal from '@/components/modals';
+import AddUserForm from './widgets/add-user-form';
+import { useGetAllUsers } from './api';
 
 export interface UserDataI {
   _id: string;
@@ -22,37 +21,36 @@ export interface UserDataI {
 
 export const userTabs = [
   {
-    id: "1",
-    category: "all",
-    role: "all",
+    id: '1',
+    category: 'all',
+    role: 'all',
   },
   {
-    id: "2",
-    category: "supervisors",
-    role: "supervisor",
+    id: '2',
+    category: 'supervisors',
+    role: 'supervisor',
   },
   {
-    id: "3",
-    category: "students",
-    role: "student",
+    id: '3',
+    category: 'students',
+    role: 'student',
   },
 ];
 
 export const userData: UserDataI[] = [
   {
-    _id: "1",
-    name: "Ami Vivian",
-    email: "ami@gmail.com",
-    phone: "08123456789",
-    role: "supervisor",
-    assigned_group: "Ai Research",
-    status: "active",
+    _id: '1',
+    name: 'Ami Vivian',
+    email: 'ami@gmail.com',
+    phone: '08123456789',
+    role: 'supervisor',
+    assigned_group: 'Ai Research',
+    status: 'active',
   },
 ];
 const UsersModule = () => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [activeTab, setActiveTab] = useState<string>("all");
-  const [allUserData, setAllUserData] = useState<UserResponse[]>();
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<string>('all');
   const [openAddUserModal, setOpenAddUserModal] = useState<boolean>(false);
   const [paginationState, setPaginationState] = useState<PaginationState>({
     pageIndex: 0,
@@ -63,31 +61,31 @@ const UsersModule = () => {
   const deboundedVal = useDebounce(searchTerm, 1500);
 
   const queryParams = `role=${
-    activeTab === "all" ? "" : activeTab
+    activeTab === 'all' ? '' : activeTab
   }&sort=&fields=${deboundedVal}`;
   const { data: allUsers, isFetching } = useGetAllUsers(queryParams);
 
-  console.log("alllUer", allUsers);
+  console.log('alllUer', allUsers);
   //handle tab selected
-  const handleSelected = (role: string, _activeTab: string) => {
-    if (role === "all") {
-      setActiveTab("all");
+  const handleSelected = (role: string) => {
+    if (role === 'all') {
+      setActiveTab('all');
     } else {
       setActiveTab(role);
     }
   };
   //search functionality will be removed later
-  const filtered = allUsers?.users?.filter((item) =>
+  const filtered = allUsers?.users?.filter(item =>
     item?.firstName?.toLowerCase()?.includes(deboundedVal?.toLowerCase())
   );
   //returns the tab count
   const getTabCount = (_tab: string) => {
-    if (_tab === "all") {
+    if (_tab === 'all') {
       return filtered?.length || 0;
-    } else if (_tab === "supervisor") {
-      return filtered?.filter((item) => item.role === _tab)?.length || 0;
-    } else if (_tab === "student") {
-      return filtered?.filter((item) => item.role === _tab)?.length || 0;
+    } else if (_tab === 'supervisor') {
+      return filtered?.filter(item => item.role === _tab)?.length || 0;
+    } else if (_tab === 'student') {
+      return filtered?.filter(item => item.role === _tab)?.length || 0;
     }
   };
 
@@ -132,14 +130,14 @@ const UsersModule = () => {
                 as="section"
                 className="whitespace-nowrap flex px-4 gap-x-5 mt-5 w-full"
               >
-                {userTabs.map((item) => (
+                {userTabs.map(item => (
                   <p
-                    onClick={() => handleSelected(item.role, item.category)}
+                    onClick={() => handleSelected(item.role)}
                     key={item.id}
                     className={`${
                       item?.role === activeTab
-                        ? "text-primary border-primary border-b-2"
-                        : "text-black border-white border-b-2"
+                        ? 'text-primary border-primary border-b-2'
+                        : 'text-black border-white border-b-2'
                     } px-6 pb-2 text-center hover:text-primary cursor-pointer capitalize transition-color ease-in-out duration-500 h-[30px]`}
                   >
                     {item.category}({getTabCount(item.role)})

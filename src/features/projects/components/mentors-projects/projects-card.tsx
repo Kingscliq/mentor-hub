@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 import { user1 } from '../../../../../public/images';
-import { ActionTypeI } from '@/types/features/projects';
+import { IActionType } from '@/types/features/projects';
 import React, { useState, useEffect } from 'react';
 import { client } from '@/lib';
 
 interface MentorsProjectsCardI {
-  handleOpenProjectReview: (val: ActionTypeI, projectId: string) => void;
+  handleOpenProjectReview: (val: IActionType, projectId: string) => void;
 }
 
 interface Project {

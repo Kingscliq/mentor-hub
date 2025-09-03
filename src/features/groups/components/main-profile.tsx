@@ -1,6 +1,7 @@
 import Box from '@/components/ui/box';
 import React from 'react';
 import { User } from '@/types/features/auth';
+// import {  AvatarImage } from '@radix-ui/react-avatar';
 
 interface MainProfileI {
   selectedUser?: User;
@@ -16,8 +17,11 @@ const MainProfile: React.FC<MainProfileI> = ({ selectedUser }) => {
         <Box as="div">
           {selectedUser ? (
             // Render Avatar here
+            
 
-            <></>
+            <>
+            {/* <AvatarImage/> */}
+            </>
           ) : (
             <>
               <Box className="h-40 w-40 rounded-full bg-gray-500"></Box>
