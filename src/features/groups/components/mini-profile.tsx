@@ -1,69 +1,62 @@
 import Box from '@/components/ui/box';
-import UserProfileCard from '../widgets/user-profile-card';
-import { GroupsDetailsI } from '@/types/features/groups';
+import { Roles, User } from '@/types/features/auth';
+import { useFetchGroups } from '@/hooks/groups';
+import UserProfileCard from '@/features/groups/widgets/user-profile-card';
+import { useAuth } from '@/hooks/auth/useAuthStore';
 
 interface MiniProfileCardI {
   loggedUser: { id: number; name: string; role: string };
-  viewGroups: GroupsDetailsI[];
-  getUser: (user: GroupsDetailsI['mentor']) => void;
+  getUser: (user: User) => void;
   selectedUserId?: string;
 }
+
 const MiniProfileCard: React.FC<MiniProfileCardI> = ({
-  loggedUser,
-  viewGroups,
+  // loggedUser,
   getUser,
   selectedUserId,
 }) => {
+  const { userGroup } = useFetchGroups();
+
+  const { role } = useAuth();
   return (
     <>
-      {loggedUser.role === 'mentee' && (
-        <Box>
-          {viewGroups.map(item => (
-            <Box as="div" key={item._id} data-aos="fade-up">
-              <Box as="h1" className="py-5 text-2xl font-bold">
-                Group Mentors
-              </Box>
-              {/* card */}
-              <UserProfileCard
-                onClick={() => getUser(item?.mentor)}
-                active={selectedUserId === item?.mentor?._id}
-                name={item?.mentor?.name ?? '-'}
-                userType={item?.mentor?.userType ?? '-'}
-              />
-            </Box>
-          ))}
+      <Box>
+        <Box as="div" data-aos="fade-up">
+          <Box as="h1" className="py-5 text-2xl font-bold">
+            Group Mentor
+          </Box>
         </Box>
-      )}
-
+      </Box>
       <Box
         as="section"
         className={`${
-          loggedUser?.role === 'mentee' && 'mt-10'
+          role === Roles.STUDENT && 'mt-10'
         } flex flex-col gap-y-10`}
       >
-        {viewGroups.map(item => (
-          <Box as="section" key={item._id}>
-            <Box as="h1" className="py-5 text-2xl font-bold">
-              {loggedUser?.role === 'mentee'
-                ? 'Group Mentees'
-                : item?.projectName ?? '-'}
-            </Box>
+        <Box as="section">
+          <Box as="h1" className="py-5 text-2xl font-bold">
+            Group Mentees
+          </Box>
 
-            <Box as="div" className="flex flex-col gap-y-5">
-              {item?.mentees?.map(item => (
-                // cards
-                <Box as="div" key={item._id} data-aos="fade-up">
+          <Box as="div" className="flex flex-col gap-y-5">
+            {userGroup?.users !== null &&
+            typeof userGroup?.users !== 'undefined' &&
+            Array.isArray(userGroup?.users) ? (
+              userGroup.users.map((user: User) => (
+                <Box as="div" key={user._id} data-aos="fade-up">
                   <UserProfileCard
-                    onClick={() => getUser(item)}
-                    active={selectedUserId === item?._id}
-                    name={item?.name ?? '-'}
-                    userType={item?.userType ?? '-'}
+                    onClick={() => getUser(user)}
+                    active={selectedUserId === user?._id}
+                    name={`${user.firstName} ${user.lastName}`}
+                    userType={user.role ?? '-'}
                   />
                 </Box>
-              ))}
-            </Box>
+              ))
+            ) : (
+              <div>Loading...</div>
+            )}
           </Box>
-        ))}
+        </Box>
       </Box>
     </>
   );

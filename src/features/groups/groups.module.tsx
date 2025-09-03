@@ -1,5 +1,4 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import Box from '@/components/ui/box';
 import { ChevronLeft } from 'lucide-react';
@@ -8,10 +7,11 @@ import MiniProfileCard from './components/mini-profile';
 import MainProfile from './components/main-profile';
 import { GroupsDetailsI } from '@/types/features/groups';
 import { user } from '@/lib';
+import { User } from '@/types/features/auth';
 
 // Will be removed when api is ready
 export const groupsData: Record<string, GroupsDetailsI[]> = {
-  mentee: [
+  ment: [
     {
       _id: '001',
       projectName: 'AI Research',
@@ -126,13 +126,11 @@ export const groupsData: Record<string, GroupsDetailsI[]> = {
 };
 
 const GroupModules: React.FC = () => {
-  const [selectedUser, setSelectedUser] = useState<GroupsDetailsI['mentor']>();
-  const searchParams = useSearchParams();
-  const projectTitle = searchParams.get('projectTitle');
-  const loggedUser = user;
-  const viewGroups = groupsData[loggedUser?.role];
+  const [selectedUser, setSelectedUser] = useState<User>();
 
-  const getUser = (_user: GroupsDetailsI['mentor']) => {
+  const loggedUser = user;
+
+  const getUser = (_user: User) => {
     setSelectedUser(_user);
   };
 
@@ -146,13 +144,17 @@ const GroupModules: React.FC = () => {
         <ChevronLeft />
       </Box>
       <Box className="mt-10">
-        {
+        {/* {
           <Box as="h1" className="text-3xl font-bold">
             {loggedUser?.role === 'mentee'
               ? projectTitle || 'AI Research Group1'
-              : 'My Groups'}
+              : 'My Group'}
           </Box>
-        }
+        } */}
+
+        <Box as="h1" className="text-3xl font-bold">
+          AI Research Group1
+        </Box>
       </Box>
       <Box
         as="div"
@@ -164,7 +166,6 @@ const GroupModules: React.FC = () => {
             selectedUserId={selectedUser?._id ?? '-'}
             getUser={getUser}
             loggedUser={loggedUser}
-            viewGroups={viewGroups}
           />
         </Box>
 

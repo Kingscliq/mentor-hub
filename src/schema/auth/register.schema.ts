@@ -27,9 +27,7 @@ export const registerValidationSchema = Yup.object({
 
 export const addProjectSchema = Yup.object({
   projectTitle: Yup.string().required('Project Title Is Required'),
-  projectDescription: Yup.string()
-    .max(500, 'Text cannot exceed 500')
-    .required('Project Description Is Required'),
+  projectDescription: Yup.string().max(500, 'Text cannot exceed 500').required('Project Description Is Required'),
 });
 
 export const addUserSchema = Yup.object({

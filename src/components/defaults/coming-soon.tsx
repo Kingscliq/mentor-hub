@@ -8,7 +8,7 @@ const ComingSoon: React.FC<ComingSoonProps> = ({ text }) => {
   return (
     <Box className="w-screen flex item-center justify-center h-screen">
       <Box>
-        <Box as="p" className="text-center mb-4 text-[60px]">
+        <Box as="p" className="mt-[70px]  text-center mb-4 text-[60px]">
           🚧
         </Box>
         <Box as="p" className="text-center">
