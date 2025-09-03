@@ -11,7 +11,7 @@ export const urls = {
   RESEND_OTP: `${env.API_V1}auth/resend-otp`,
   VERIFY_EMAIL: `${env.API_V1}auth/verify-email`,
   PROJECTS: `${env.API_V1}/projects/`,
-  GROUPS: `${env.API_V1}/groups/`,
+  GROUPS: `${env.API_V1}groups/`,
 };
 
 export const user = {
