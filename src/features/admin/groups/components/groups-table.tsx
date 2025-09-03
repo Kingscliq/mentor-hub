@@ -1,44 +1,41 @@
-"use client";
+'use client';
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   ColumnDef,
   createColumnHelper,
   PaginationState,
-} from "@tanstack/react-table";
-import { Ellipsis, Eye, SquarePen, Users } from "lucide-react";
+} from '@tanstack/react-table';
+import { Ellipsis, Eye, SquarePen, Users } from 'lucide-react';
 
-import { Dispatch, ReactNode, SetStateAction, useState } from "react";
-import { CustomTable } from "@/components/ui/table/new-table";
-import Box from "@/components/ui/box";
-import ConfirmationModal from "@/components/modals/confirmation-modal";
-import MainModal from "@/components/modals";
-import AddGroupsForm from "../widgets/add-group-form";
-import { GroupRecordsI } from "../api";
-import { useRouter } from "next/navigation";
-import { getDateTimeOnly } from "@/utils/formatter";
+import { Dispatch, SetStateAction, useState } from 'react';
+import { CustomTable } from '@/components/ui/table/new-table';
+import Box from '@/components/ui/box';
+import ConfirmationModal from '@/components/modals/confirmation-modal';
+import MainModal from '@/components/modals';
+import AddGroupsForm from '../widgets/add-group-form';
+import { useRouter } from 'next/navigation';
+import { getDateTimeOnly } from '@/utils/formatter';
+import { ICreateGroupPayload, IGroupsList } from '@/types/features/groups';
 
 const GroupsTable = ({
   data = [],
   paginationState,
   setPaginationState,
-  pageCount,
-  itemsPerPageOptions,
+
   totalItemsCount,
   isLoadingData,
   searchTerm,
   refetch,
   handleAddGroups,
 }: {
-  data?: GroupRecordsI[];
+  data?: IGroupsList[];
   paginationState?: PaginationState;
   setPaginationState?: Dispatch<
     SetStateAction<{
@@ -54,22 +51,16 @@ const GroupsTable = ({
   refetch: () => void;
   handleAddGroups: () => void;
 }) => {
-  const columnHelper = createColumnHelper<GroupRecordsI>();
-  const [clickedItem, setClickedItem] = useState<GroupRecordsI>();
+  const columnHelper = createColumnHelper<IGroupsList>();
+  const [clickedItem, setClickedItem] = useState<ICreateGroupPayload>({
+    name: '',
+    maximumGroupSize: '' as unknown as number,
+  });
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeactivateModal, setOpenDeactivateModal] =
     useState<boolean>(false);
 
-  const getClickedRow = (_rowId: string) => {
-    const clickedItem = data.find((item) => item._id === _rowId);
-    setClickedItem(clickedItem);
-  };
-
-  const handleOpenModal = (_rowId: string) => {
-    getClickedRow(_rowId);
-  };
-
-  const router = useRouter()
+  const router = useRouter();
   const stopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
@@ -99,26 +90,26 @@ const GroupsTable = ({
     </Box>
   );
   const columns = [
-    columnHelper.accessor("_id", {
-      id: "_id",
+    columnHelper.accessor('_id', {
+      id: '_id',
       size: 60,
       cell: ({ row }) => <span>{row.index + 1}</span>,
       header: () => <span className="text-xs">S/N</span>,
     }),
-    columnHelper.accessor("name", {
-      id: "name",
+    columnHelper.accessor('name', {
+      id: 'name',
       size: 100,
-      cell: (info) => info.getValue(),
+      cell: info => info.getValue(),
       header: () => <span className="text-xs uppercase">Group Name</span>,
     }),
-    columnHelper.accessor("createdAt", {
-      id: "role",
+    columnHelper.accessor('createdAt', {
+      id: 'role',
       size: 120,
-      cell: (info) => getDateTimeOnly(info.getValue()),
+      cell: info => getDateTimeOnly(info.getValue()),
       header: () => <span className="text-xs uppercase">Created Date</span>,
     }),
     {
-      id: "actions",
+      id: 'actions',
       header: () => <span className="text-xs uppercase">Actions</span>,
       cell: ({ row }) => {
         const rowData = row.original;
@@ -138,18 +129,18 @@ const GroupsTable = ({
             <DropdownMenuContent>
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={(e) => {
+                onClick={e => {
                   stopPropagation(e);
                   setClickedItem(rowData);
-                  router.push(`/admin/groups/${row_id}`)
+                  router.push(`/admin/groups/${row_id}`);
                 }}
               >
-                {" "}
+                {' '}
                 <Eye /> View
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={(e) => {
+                onClick={e => {
                   stopPropagation(e);
                   setOpenEditModal(true);
                   setClickedItem(rowData);
@@ -160,7 +151,7 @@ const GroupsTable = ({
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
-                onClick={(e) => {
+                onClick={e => {
                   stopPropagation(e);
                   setOpenDeactivateModal(true);
                   setClickedItem(rowData);
@@ -173,7 +164,7 @@ const GroupsTable = ({
         );
       },
     },
-  ] as Array<ColumnDef<any, unknown>>;
+  ] as Array<ColumnDef<IGroupsList, unknown>>;
 
   return (
     <>
@@ -199,7 +190,7 @@ const GroupsTable = ({
           onClose={() => setOpenEditModal(false)}
         >
           <AddGroupsForm
-            userDetails={clickedItem}
+            groupsPayload={clickedItem}
             actionType="edit"
             onClose={() => setOpenEditModal(false)}
             refetch={refetch}

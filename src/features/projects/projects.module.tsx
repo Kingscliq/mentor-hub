@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionTypeI, IMenteeProjectsData } from '@/types/features/projects';
+import { IActionType, IMenteeProjectsData } from '@/types/features/projects';
 import { ChevronLeft, Plus } from 'lucide-react';
 
 import AddProjectForm from './widgets/add-project-form';
@@ -88,13 +88,13 @@ const ProjectsModules = () => {
   const [addProject, setAddProject] = useState<boolean>(false);
   const [openProjectApproval, setOpenProjectApproval] =
     useState<boolean>(false);
-  const [actionType, setActionType] = useState<ActionTypeI>();
+  const [actionType, setActionType] = useState<IActionType>();
   const loggedUser = user;
   const AllProjects =
     loggedUser.role === Roles.STUDENT ? MenteeProjects : MentorProjects;
 
   const handleOpenProjectReview = (
-    _actionType: ActionTypeI,
+    _actionType: IActionType,
     projectId: string
   ) => {
     console.log({ projectId });

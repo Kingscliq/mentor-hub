@@ -1,13 +1,10 @@
-import Box from "@/components/ui/box";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { addProjectSchema, addUserSchema } from "@/schema/auth";
-import { Roles } from "@/types/features/auth";
-import { useFormik } from "formik";
-import { UserDataI } from "../users.module";
-import { UserResponse } from "../api";
+import Box from '@/components/ui/box';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
+import { addUserSchema } from '@/schema/auth';
+import { useFormik } from 'formik';
+import { UserResponse } from '../api';
 
 interface InitialValuesType {
   name: string;
@@ -17,7 +14,7 @@ interface InitialValuesType {
 
 export interface AddUserFormProps {
   onClose: () => void;
-  actionType: "edit" | "add";
+  actionType: 'edit' | 'add';
   userDetails?: UserResponse;
 }
 const AddUserForm: React.FC<AddUserFormProps> = ({
@@ -26,9 +23,9 @@ const AddUserForm: React.FC<AddUserFormProps> = ({
   userDetails,
 }) => {
   const initialValues: InitialValuesType = {
-    name: actionType === "edit" ? (userDetails?.firstName as string) : "",
-    email: actionType === "edit" ? (userDetails?.email as string) : "",
-    role: actionType === "edit" ? (userDetails?.role as string) : "",
+    name: actionType === 'edit' ? (userDetails?.firstName as string) : '',
+    email: actionType === 'edit' ? (userDetails?.email as string) : '',
+    role: actionType === 'edit' ? (userDetails?.role as string) : '',
   };
 
   const {
@@ -43,7 +40,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({
     initialValues,
     validationSchema: addUserSchema,
     onSubmit: () => {
-      console.log("formvalue", values);
+      console.log('formvalue', values);
       onClose();
     },
   });
@@ -90,10 +87,10 @@ const AddUserForm: React.FC<AddUserFormProps> = ({
           </Box>
           <Select
             value={values.role}
-            onChange={(value) => setFieldValue("role", value)}
+            onChange={value => setFieldValue('role', value)}
             options={[
-              { value: "supervisor", label: "Supervisor" },
-              { value: "student", label: "Student" },
+              { value: 'supervisor', label: 'Supervisor' },
+              { value: 'student', label: 'Student' },
             ]}
             placeholder="Choose a role"
           ></Select>
@@ -119,7 +116,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({
             type="submit"
             className=" bg-primary cursor-pointer text-white py-2 rounded hover:bg-blue-700 transition"
           >
-            {actionType === 'edit' ? "Edit" : "Create"}
+            {actionType === 'edit' ? 'Edit' : 'Create'}
           </Button>
         </Box>
       </Box>

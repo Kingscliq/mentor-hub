@@ -1,64 +1,56 @@
-import Box from "@/components/ui/box";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { addGroupSchema, addProjectSchema, addUserSchema } from "@/schema/auth";
-import { Roles } from "@/types/features/auth";
-import { useFormik } from "formik";
-import { GroupDataI } from "../groups.module";
-import { GroupRecordsI, useCreateGroup } from "../api";
-import { toast } from "sonner";
+import Box from '@/components/ui/box';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { addGroupSchema } from '@/schema/auth';
 
+import { useFormik } from 'formik';
+import { useCreateGroup } from '../api';
+import { toast } from 'sonner';
+import { ICreateGroupPayload } from '@/types/features/groups';
 
 interface InitialValuesType {
   name: string;
-  maximum_size:number;
+  maximum_size: number;
 }
 
 export interface AddGroupsFormProps {
   onClose: () => void;
-  actionType: "edit" | "add";
-  userDetails?: GroupRecordsI;
-  refetch:() => void
+  actionType: 'edit' | 'add';
+  groupsPayload: ICreateGroupPayload;
+  refetch: () => void;
 }
 const AddGroupsForm: React.FC<AddGroupsFormProps> = ({
   onClose,
   actionType,
-  userDetails,
+  groupsPayload,
   refetch,
 }) => {
   const initialValues: InitialValuesType = {
-    name:actionType === "edit" ? (userDetails?.name as string) : "",
-    maximum_size:actionType === "edit" ? (userDetails?.maximumGroupSize as number) : 0,
+    name: actionType === 'edit' ? groupsPayload.name : '',
+    maximum_size: actionType === 'edit' ? groupsPayload.maximumGroupSize : 0,
   };
 
-
-  const createGroupMutation = useCreateGroup()
-  const {
-    values,
-    handleChange,
-    handleSubmit,
-    errors,
-    touched,
-    handleBlur,
-    setFieldValue,
-  } = useFormik<InitialValuesType>({
-    initialValues,
-    validationSchema: addGroupSchema,
-    onSubmit: () => {
-      createGroupMutation.mutate({ name:values.name, maximumGroupSize:Number(values.maximum_size)}, {
-        onSuccess: (data) => {
-          toast.success(data.message || data.status);
-          refetch();
-          onClose();
-        },
-        onError: (error) => {
-          toast.error(error.message);
-        },
-      });
-    },
-  });
+  const createGroupMutation = useCreateGroup();
+  const { values, handleChange, handleSubmit, errors, touched, handleBlur } =
+    useFormik<InitialValuesType>({
+      initialValues,
+      validationSchema: addGroupSchema,
+      onSubmit: () => {
+        createGroupMutation.mutate(
+          { name: values.name, maximumGroupSize: Number(values.maximum_size) },
+          {
+            onSuccess: data => {
+              toast.success(data.message || data.status);
+              refetch();
+              onClose();
+            },
+            onError: error => {
+              toast.error(error.message);
+            },
+          }
+        );
+      },
+    });
   return (
     <Box>
       <Box className="mt-10" as="form" onSubmit={handleSubmit}>
@@ -86,7 +78,9 @@ const AddGroupsForm: React.FC<AddGroupsFormProps> = ({
             onBlur={handleBlur}
             placeholder=""
             error={
-              touched.maximum_size && errors.maximum_size ? String(errors.maximum_size) : undefined
+              touched.maximum_size && errors.maximum_size
+                ? String(errors.maximum_size)
+                : undefined
             }
           />
         </Box>
@@ -102,28 +96,24 @@ const AddGroupsForm: React.FC<AddGroupsFormProps> = ({
             Cancel
           </Button>
 
-          {
-            actionType === 'edit' && 
-
+          {actionType === 'edit' && (
             <Button
-            type="submit"
-            loading={createGroupMutation.isPending}
-            className=" bg-primary cursor-pointer text-white py-2 rounded hover:bg-blue-700 transition"
-          >
-            {createGroupMutation.isPending ? "Editing" : "Edit"}
-          </Button>
-          }
-           {
-            actionType === 'add' && 
-
+              type="submit"
+              loading={createGroupMutation.isPending}
+              className=" bg-primary cursor-pointer text-white py-2 rounded hover:bg-blue-700 transition"
+            >
+              {createGroupMutation.isPending ? 'Editing' : 'Edit'}
+            </Button>
+          )}
+          {actionType === 'add' && (
             <Button
-            type="submit"
-            loading={createGroupMutation.isPending}
-            className=" bg-primary cursor-pointer text-white py-2 rounded hover:bg-blue-700 transition"
-          >
-            {createGroupMutation.isPending ? "Creating" : "Create"}
-          </Button>
-          }
+              type="submit"
+              loading={createGroupMutation.isPending}
+              className=" bg-primary cursor-pointer text-white py-2 rounded hover:bg-blue-700 transition"
+            >
+              {createGroupMutation.isPending ? 'Creating' : 'Create'}
+            </Button>
+          )}
         </Box>
       </Box>
     </Box>
