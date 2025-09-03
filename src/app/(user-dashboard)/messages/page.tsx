@@ -1,3 +1,4 @@
+import React from "react"
 import ComingSoon from "@/components/defaults/coming-soon"
 
 const Messages = () => {

@@ -1,10 +1,9 @@
 import Box from '@/components/ui/box';
-import Image from 'next/image';
 import React from 'react';
-import { GroupsDetailsI } from '@/types/features/groups';
+import { User } from '@/types/features/auth';
 
 interface MainProfileI {
-  selectedUser?: GroupsDetailsI['mentor'];
+  selectedUser?: User;
 }
 const MainProfile: React.FC<MainProfileI> = ({ selectedUser }) => {
   return (
@@ -15,14 +14,10 @@ const MainProfile: React.FC<MainProfileI> = ({ selectedUser }) => {
         data-aos="fade-down"
       >
         <Box as="div">
-          {selectedUser?.photo ? (
-            <Image
-              src={selectedUser?.photo || 'https://user.png'}
-              alt="user"
-              width={200}
-              height={150}
-              className="rounded-full"
-            />
+          {selectedUser ? (
+            // Render Avatar here
+
+            <></>
           ) : (
             <>
               <Box className="h-40 w-40 rounded-full bg-gray-500"></Box>
@@ -34,7 +29,9 @@ const MainProfile: React.FC<MainProfileI> = ({ selectedUser }) => {
         </Box>
         <Box>
           <Box as="h1" className="text-2xl font-bold text-black mt-3">
-            {selectedUser?.name ?? '-'}
+            {`${selectedUser?.firstName ?? '-'} ${
+              selectedUser?.lastName ?? '-'
+            }`}
           </Box>
         </Box>
       </Box>
@@ -55,7 +52,7 @@ const MainProfile: React.FC<MainProfileI> = ({ selectedUser }) => {
           <Box as="p" className="text-lg font-bold text=black">
             Reg Number:
             <Box as="span" className="text-gray-400 text-sm">
-              {selectedUser?.RegNumber ?? '-'}
+              {selectedUser?.matricNumber ?? '-'}
             </Box>
           </Box>
           <Box as="p" className="text-lg font-bold text=black">

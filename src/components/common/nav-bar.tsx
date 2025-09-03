@@ -56,7 +56,7 @@ const Header: React.FC = () => {
 
   const pathname = usePathname();
   return (
-    <Box as="header" className="bg-white shadow-sm border-b border-gray-200">
+    <Box as="header" className=" bg-white w-[100%] shadow-sm border-b border-gray-200">
       <Box className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Box className="flex justify-between items-center h-16">
           <Box className="flex items-center">

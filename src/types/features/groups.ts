@@ -1,22 +1,39 @@
-import { StaticImageData } from "next/image";
+import { StaticImageData } from 'next/image';
 
 // export interface GroupModulesI {}
 
 export interface GroupsDetailsI {
+  _id: string;
+  projectName: string;
+  mentor: {
+    name: string;
+    userType: string;
+    photo: StaticImageData;
     _id: string;
-    projectName: string;
-    mentor: { name: string; userType: string; photo: StaticImageData; _id:string; email:string;
-        phoneNumber:string;
-        RegNumber:string;
-        department:string};
-    mentees: {
-      name: string;
-      userType: string;
-      photo: StaticImageData;
-      _id: string;
-      email:string;
-        phoneNumber:string;
-        RegNumber:string;
-        department:string
-    }[];
-  }
+    email: string;
+    phoneNumber: string;
+    RegNumber: string;
+    department: string;
+  };
+  mentees: {
+    name: string;
+    userType: string;
+    photo: StaticImageData;
+    _id: string;
+    email: string;
+    phoneNumber: string;
+    RegNumber: string;
+    department: string;
+  }[];
+}
+
+export interface IGroups {
+  users: string[];
+  _id: string;
+  name: string;
+  maximumGroupSize: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: string;
+  supervisor: string;
+}
