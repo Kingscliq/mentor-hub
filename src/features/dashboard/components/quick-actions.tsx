@@ -30,7 +30,7 @@ export const QuickActions = () => {
             <Button
               key={idx}
               variant="outline"
-              className="flex items-center justify-center gap-2 w-full"
+              className="flex hover:cursor-pointer items-center justify-center gap-2 w-full"
               onClick={action.onClick}
             >
               <Icon className="w-5 h-5" />

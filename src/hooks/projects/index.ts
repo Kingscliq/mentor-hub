@@ -1,1 +1,2 @@
-export * from './useAddProject'
+export * from './useAddProject';
+export * from './useFetchProjects';

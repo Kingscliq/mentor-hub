@@ -1,4 +1,4 @@
-import { IGroups } from '@/types/features/groups';
+import { IGroupsList } from '@/types/features/groups';
 
 export type Role = 'student' | 'supervisor' | 'admin';
 
@@ -72,7 +72,7 @@ export interface User {
   phoneNumber: string;
   matricNumber: string;
   academicYear: string | number;
-  group: IGroups[];
+  group: IGroupsList[];
 }
 
 export interface ResendOtpValues {

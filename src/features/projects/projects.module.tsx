@@ -93,11 +93,7 @@ const ProjectsModules = () => {
   const AllProjects =
     loggedUser.role === Roles.STUDENT ? MenteeProjects : MentorProjects;
 
-  const handleOpenProjectReview = (
-    _actionType: IActionType,
-    projectId: string
-  ) => {
-    console.log({ projectId });
+  const handleOpenProjectReview = (_actionType: IActionType) => {
     setOpenProjectApproval(true);
     setActionType(_actionType);
   };
@@ -145,7 +141,7 @@ const ProjectsModules = () => {
                 <MenteesProjects projects={AllProjects} />
               ) : (
                 <MentorsProject
-                  projects={AllProjects}
+                  // projects={AllProjects}
                   handleOpenProjectReview={handleOpenProjectReview}
                 />
               )}

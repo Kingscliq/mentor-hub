@@ -20,3 +20,8 @@ export interface IMenteeProjectsData {
     status: string;
   }[];
 }
+
+export interface IProjectPayload {
+  topic: string;
+  description: string;
+}

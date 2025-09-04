@@ -10,7 +10,7 @@ export const urls = {
   USER_PROFILE: `${env.API_V1}auth/profile`,
   RESEND_OTP: `${env.API_V1}auth/resend-otp`,
   VERIFY_EMAIL: `${env.API_V1}auth/verify-email`,
-  PROJECTS: `${env.API_V1}/projects/`,
+  PROJECTS: `${env.API_V1}projects`,
   GROUPS: `${env.API_V1}groups`,
 };
 
@@ -23,4 +23,5 @@ export const user = {
 export const queryKeys = {
   ALL_GROUPS: 'all-groups',
   SINGLE_GROUP: 'single-group',
+  CREATE_PROJECT: 'create-project',
 };

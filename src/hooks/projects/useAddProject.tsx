@@ -1,29 +1,22 @@
-import { AddProjectPayload } from '@/types/features/projects';
-import { client } from '@/lib/api';
-import { toast } from 'sonner';
-import { urls } from '@/lib/config';
 import { useMutation } from '@tanstack/react-query';
+import { client, urls, queryKeys } from '@/lib';
+import { LoginResponse } from '@/types/features/auth';
+import { AxiosError } from 'axios';
+import { AuthErrorResponse } from '@/utils';
+import { IProjectPayload } from '@/types/features/projects';
 
 export const useAddProject = () => {
-  const {
-    mutate: addProject,
-    isPending,
-    error,
-  } = useMutation({
-    mutationFn: (data: AddProjectPayload) => {
-      return client.post(urls.PROJECTS, data);
-    },
-    onSuccess: () => {
-      toast.success('Project added successfully');
-    },
-    onError: error => {
-      console.log(error);
-    },
-  });
-
-  return {
-    addProject,
-    isPending,
-    error,
+  const addProject = async (payload: IProjectPayload) => {
+    const response = await client.post(urls.PROJECTS, payload);
+    return response.data?.data;
   };
+
+  return useMutation<
+    LoginResponse, // TODO: removee and replace with valid types
+    AxiosError<AuthErrorResponse>,
+    IProjectPayload
+  >({
+    mutationKey: [queryKeys.CREATE_PROJECT],
+    mutationFn: addProject,
+  });
 };

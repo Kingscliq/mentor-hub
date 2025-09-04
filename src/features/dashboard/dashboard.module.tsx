@@ -29,7 +29,7 @@ export const DashboardModule = () => {
       value: string | number;
       icon: React.ElementType;
       color: string;
-      url?:string
+      url?: string;
     }>
   > = {
     student: [
@@ -38,15 +38,14 @@ export const DashboardModule = () => {
         value: 5,
         icon: BookOpen,
         color: 'bg-blue-500',
-          url:'/groups'
-        
+        url: '/groups',
       },
       {
         name: 'Completed Milestones',
         value: 10,
         icon: CheckCircle,
         color: 'bg-green-500',
-        url:'/projects'
+        url: '/projects',
       },
       {
         name: 'Pending Reviews',
@@ -67,7 +66,6 @@ export const DashboardModule = () => {
         value: 4,
         icon: Users,
         color: 'bg-emerald-500',
-        
       },
       {
         name: 'Projects Supervised',
@@ -94,14 +92,14 @@ export const DashboardModule = () => {
         value: 5,
         icon: BookOpen,
         color: 'bg-indigo-500',
-         url:'/admin/groups'
+        url: '/admin/groups',
       },
       {
         name: 'Total Users',
         value: 2,
         icon: Users,
         color: 'bg-emerald-500',
-        url:'/admin/users'
+        url: '/admin/users',
       },
       {
         name: 'Pending Approvals',
@@ -135,7 +133,7 @@ export const DashboardModule = () => {
       {/* Stats Overview */}
       <Box
         as="section"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 hover:cursor-pointer"
       >
         {stats.map((stat, index) => {
           const Icon = stat.icon;
@@ -150,32 +148,23 @@ export const DashboardModule = () => {
             />
           );
         })}
-       </Box>
+      </Box>
 
-       {/* Recent Projects & Recent Activity for mentors and mentee*/}
-       {
-        user?.role !== Roles.ADMIN && (
-          <>
+      {/* Recent Projects & Recent Activity for mentors and mentee*/}
+      {user?.role !== Roles.ADMIN && (
+        <>
           <Box as="section" className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <RecentProjects />
-          <RecentActivityList />
+            <RecentProjects />
+            <RecentActivityList />
           </Box>
-           {/* Quick Actions */}
+          {/* Quick Actions */}
           <Box as="section" className="mt-8">
-              <QuickActions />
+            <QuickActions />
           </Box>
-          </>
-        )
-       }
+        </>
+      )}
 
-       {
-        user?.role === Roles.ADMIN && 
-         (
-          <AdminRecentActivity/>
-         )     
-       }
-
-     
+      {user?.role === Roles.ADMIN && <AdminRecentActivity />}
     </Box>
   );
 };

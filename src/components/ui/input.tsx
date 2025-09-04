@@ -34,10 +34,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </Box>
         )}
 
-        <Box className={cn(
-          'relative',
-          customBorder && 'mt-4'
-        )}>
+        <Box className={cn('relative', customBorder && 'mt-4')}>
           {iconLeft && (
             <Box
               as="span"
@@ -55,8 +52,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             data-slot="input"
             aria-invalid={!!error}
             className={cn(
-              'appearance-none block w-full pl-5 pr-3 py-2 placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-              customBorder ? customBorder : "border border-gray-300 rounded-md",
+              'appearance-none block w-full p-2 placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+              customBorder ? customBorder : 'border border-gray-300 rounded-md',
               iconLeft && 'pl-8',
               iconRight && 'pr-8',
               error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
