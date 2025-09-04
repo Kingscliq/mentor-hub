@@ -1,9 +1,10 @@
 import Box from '@/components/ui/box';
 import { Card } from '@/components/ui/card';
 import MentorsProjectCard from './projects-card';
+import { IActionType } from '@/types/features/projects';
 
 export interface MentorsProjectsProps {
-  handleOpenProjectReview: (projectId: string) => void;
+  handleOpenProjectReview: (_actionType: IActionType) => void;
 }
 const MentorsProject: React.FC<MentorsProjectsProps> = ({
   handleOpenProjectReview,

@@ -5,22 +5,56 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { addProjectSchema } from '@/schema/auth';
 import { useFormik } from 'formik';
+import { useAuth } from '@/hooks/auth/useAuthStore';
+import { useAddProject } from '@/hooks/groups/useAddProject';
+import { toast } from 'sonner';
 
-const AddProjectForm = ({ onClose }: { onClose: () => void }) => {
-  const initialValues: AddProjectFormValues = {
-    topic: '',
-    description: '',
-  };
+const initialValues: AddProjectFormValues = {
+  topic: '',
+  description: '',
+};
 
-  const { values, handleChange, handleSubmit, errors, touched, handleBlur } =
-    useFormik<AddProjectFormValues>({
-      initialValues,
-      validationSchema: addProjectSchema,
-      onSubmit: () => {
-        console.log('formvalue', values);
-        onClose();
-      },
-    });
+interface IAddProjectProps {
+  onClose: () => void;
+}
+const AddProjectForm: React.FC<IAddProjectProps> = ({ onClose }) => {
+  const { group } = useAuth();
+  const { mutate, isPending } = useAddProject();
+
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+    handleBlur,
+    resetForm,
+  } = useFormik<AddProjectFormValues>({
+    initialValues,
+    validationSchema: addProjectSchema,
+    onSubmit: async formValues => {
+      const payload = {
+        topic: formValues.topic,
+        description: formValues.description,
+        groupId: group[0]._id,
+      };
+      mutate(payload, {
+        onSuccess(data) {
+          console.log(data);
+          resetForm();
+          onClose?.();
+        },
+        onError(error) {
+          const message =
+            typeof error?.response?.data.message === 'string'
+              ? error?.response?.data.message
+              : 'Something went wrong';
+          toast.error(message);
+        },
+      });
+    },
+  });
+
   return (
     <Box>
       <Box className="mt-5" as="form" onSubmit={handleSubmit}>
@@ -73,6 +107,7 @@ const AddProjectForm = ({ onClose }: { onClose: () => void }) => {
           <Button
             type="submit"
             className="flex ml-auto cursor-pointer bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            loading={isPending}
           >
             Submit
           </Button>

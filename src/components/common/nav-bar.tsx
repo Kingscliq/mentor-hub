@@ -12,6 +12,7 @@ import {
   Settings,
   Book,
   Users,
+  LayoutDashboard,
 } from 'lucide-react';
 import Link from 'next/link';
 import Box from '@/components/ui/box';
@@ -41,10 +42,10 @@ const Header: React.FC = () => {
     if (!user) return [];
 
     const baseItems = [
-      { path: '/dashboard', label: 'Dashboard', icon: GraduationCap },
+      { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
       { path: '/messages', label: 'Messages', icon: MessageSquare },
       { path: '/projects', label: 'Projects', icon: Book },
-      { path: '/groups', label: 'Groups', icon: Users},
+      { path: '/groups', label: 'Groups', icon: Users },
     ];
 
     if (user?.role === Roles.ADMIN) {
@@ -56,7 +57,10 @@ const Header: React.FC = () => {
 
   const pathname = usePathname();
   return (
-    <Box as="header" className=" bg-white w-[100%] shadow-sm border-b border-gray-200">
+    <Box
+      as="header"
+      className=" bg-white w-[100%] shadow-sm border-b border-gray-200"
+    >
       <Box className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Box className="flex justify-between items-center h-16">
           <Box className="flex items-center">
