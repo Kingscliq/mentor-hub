@@ -9,7 +9,7 @@ import MainModal from '@/components/modals';
 import { useState } from 'react';
 import { useGetAllGroups } from '../api';
 import AddUser from '@/features/admin/groups/widgets/add-user-form';
-import { User } from '@/types/features/auth';
+import { IGroupsList } from '@/types/features/groups';
 
 const AdminGroupDetails = ({ params }: { params: string }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -17,16 +17,10 @@ const AdminGroupDetails = ({ params }: { params: string }) => {
   const { data: allGroups } = useGetAllGroups('');
 
   // group details
-  const groupDetails = allGroups?.groups?.find(
+  const groupDetails: IGroupsList | undefined = allGroups?.groups?.find(
     item => String(item?._id) === String(params)
   );
   console.log({ groupDetails });
-
-  const students  = groupDetails?.users.map((user: User[]) => ({
-    name: user?.firstName,
-    role: user?.role,
-  }));
-  console.log({students});
 
   const isMentorEmpty = false;
 

@@ -76,6 +76,18 @@ export interface User {
   profileImage: string;
 }
 
+export interface GroupDetails {
+  id: number;
+  groupName: string;
+  users: AddUsers[];
+}
+
+export interface AddUsers {
+  id: string;
+  firstName: string;
+  role: string;
+}
+
 export interface ResendOtpValues {
   email: string;
 }
