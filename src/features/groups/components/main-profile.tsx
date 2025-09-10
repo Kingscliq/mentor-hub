@@ -1,7 +1,9 @@
 import Box from '@/components/ui/box';
 import React from 'react';
 import { User } from '@/types/features/auth';
-// import {  AvatarImage } from '@radix-ui/react-avatar';
+// import { Avatar } from '@/components/ui';
+import Image from 'next/image';
+import { User2 } from '../../../../public';
 
 interface MainProfileI {
   selectedUser?: User;
@@ -16,11 +18,16 @@ const MainProfile: React.FC<MainProfileI> = ({ selectedUser }) => {
       >
         <Box as="div">
           {selectedUser ? (
-            // Render Avatar here
-            
-
             <>
-            {/* <AvatarImage/> */}
+              <Box>
+                <Image
+                  src={selectedUser?.profileImage || User2}
+                  alt=""
+                  width={50}
+                  height={50}
+                  className="rounded-full  h-[250px] w-[250px]"
+                />{' '}
+              </Box>
             </>
           ) : (
             <>
@@ -39,34 +46,69 @@ const MainProfile: React.FC<MainProfileI> = ({ selectedUser }) => {
           </Box>
         </Box>
       </Box>
-      {selectedUser && (
-        <Box as="div" className="px-10 flex flex-col gap-y-4">
-          <Box as="p" className="text-lg font-bold text=black">
-            Email Address:{' '}
-            <Box as="span" className="text-gray-400 text-sm">
-              {selectedUser?.email ?? '-'}
+
+      <Box className="justify-center grid">
+        {selectedUser && (
+          <Box as="div" className="px-10 flex flex-col gap-y-4">
+            <Box as="div" className="flex justify-between">
+              <Box as="span" className="w-40 text-right">
+                Phone Number:
+              </Box>
+              <Box
+                as="span"
+                className="flex-1 pl-4 text-left text-gray-400 text-sm"
+              >
+                {selectedUser?.phoneNumber ?? '-'}
+              </Box>
+            </Box>
+            <Box as="div" className="flex justify-between">
+              <Box as="span" className="w-40 text-right ">
+                Email Address:
+              </Box>
+              <Box
+                as="span"
+                className="flex-1 pl-4 text-left mt-[3px] text-gray-400 text-sm"
+              >
+                {selectedUser?.email ?? '-'}
+              </Box>
+            </Box>
+            <Box as="div" className="flex justify-between">
+              <Box as="span" className="w-40 text-right">
+                Reg Number:
+              </Box>
+              <Box
+                as="span"
+                className="flex-1 pl-4 text-left mt-[3px] text-gray-400 text-sm"
+              >
+                {selectedUser?.matricNumber ?? '-'}
+              </Box>
+            </Box>
+            <Box as="div" className="flex justify-between">
+              <Box as="span" className="w-40 text-right">
+                Department:
+              </Box>
+              <Box
+                as="span"
+                className="flex-1 pl-4 text-left mt-[3px] text-gray-400 text-sm"
+              >
+                {selectedUser?.department ?? '-'}
+              </Box>
+            </Box>
+
+            <Box as="div" className="flex justify-between">
+              <Box as="span" className="w-40 text-right">
+                Role:
+              </Box>
+              <Box
+                as="span"
+                className="flex-1 pl-4 text-left mt-[3px] text-gray-400 text-sm"
+              >
+                {selectedUser?.role ?? '-'}
+              </Box>
             </Box>
           </Box>
-          <Box as="p" className="text-lg font-bold text=black">
-            Department:{' '}
-            <Box as="span" className="text-gray-400 text-sm">
-              {selectedUser?.department ?? '-'}
-            </Box>
-          </Box>
-          <Box as="p" className="text-lg font-bold text=black">
-            Reg Number:
-            <Box as="span" className="text-gray-400 text-sm">
-              {selectedUser?.matricNumber ?? '-'}
-            </Box>
-          </Box>
-          <Box as="p" className="text-lg font-bold text=black">
-            Phone Number:
-            <Box as="span" className="text-gray-400 text-sm">
-              {selectedUser?.phoneNumber ?? '-'}
-            </Box>
-          </Box>
-        </Box>
-      )}
+        )}
+      </Box>
     </Box>
   );
 };

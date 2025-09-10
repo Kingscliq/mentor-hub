@@ -30,6 +30,7 @@ const MenteesProjects: React.FC<MenteesProjectsProps> = () => {
   // );
 
   const { userProject } = useFetchProject();
+  // console.log({ userProject });
 
   const {} = useAuth();
   return (
@@ -54,7 +55,10 @@ const MenteesProjects: React.FC<MenteesProjectsProps> = () => {
                   className="flex justify-between items-center text-black rounded-xl py-8 px-2 bg-[#FAFAFA]"
                 >
                   {user.topic}
-                  <Badge variant="approved" className="absolute right-[10px] capitalize">
+                  <Badge
+                    variant="approved"
+                    className="absolute right-[10px] capitalize"
+                  >
                     {user.status ?? '-'}
                   </Badge>
                 </Box>

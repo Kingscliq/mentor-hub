@@ -12,6 +12,7 @@ export const urls = {
   VERIFY_EMAIL: `${env.API_V1}auth/verify-email`,
   PROJECTS: `${env.API_V1}projects`,
   GROUPS: `${env.API_V1}groups`,
+  ADD_TO_GROUP: `${env.API_V1}groups/add-to-group`
 };
 
 export const user = {

@@ -112,9 +112,7 @@ export const OTPField = ({
       return Math.min(customSeparatorIndex, maxLength - 1);
     }
     return Math.floor(maxLength / 2) - 1;
-  };
-
-  const separatorIndex = getSeparatorIndex();
+  };  const separatorIndex = getSeparatorIndex();
 
   return (
     <Box as="div" className="flex flex-col gap-2">

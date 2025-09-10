@@ -2,7 +2,9 @@ import Box from '@/components/ui/box';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 import React from 'react';
-import { user1 } from '../../../../public';
+import { User2 } from '../../../../public';
+// import { user1 } from '../../../../public';
+// import { User2 } from 'lucide-react';
 
 interface UserProfileCardI {
   name: string;
@@ -29,7 +31,7 @@ const UserProfileCard: React.FC<UserProfileCardI> = ({
       <Box as="div" className={`px-3  py-4 flex items-center gap-x-5`}>
         <Box as="div">
           <Image
-            src={photo || user1}
+            src={photo || User2}
             alt=""
             width={50}
             height={50}
