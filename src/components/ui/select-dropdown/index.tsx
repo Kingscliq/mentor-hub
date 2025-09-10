@@ -93,7 +93,7 @@ const SelectDropdown = React.forwardRef(function SelectDropdown(
       cursor: 'pointer',
       border: '1px solid #EDEEEF',
       '&:hover': {
-        border: '2px solid #0A7B7B',
+        border: '2px solid #165dfb',
       },
     }),
 
@@ -103,7 +103,7 @@ const SelectDropdown = React.forwardRef(function SelectDropdown(
         state.isSelected ? '#fff' : state.isFocused ? '#20282e' : '#20282e'
       }`,
       backgroundColor: state.isSelected
-        ? '#0A7B7B'
+        ? '#165dfb'
         : state.isFocused
         ? '#F6F9FB'
         : '',

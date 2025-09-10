@@ -73,6 +73,7 @@ export interface User {
   matricNumber: string;
   academicYear: string | number;
   group: IGroupsList[];
+  profileImage: string;
 }
 
 export interface ResendOtpValues {

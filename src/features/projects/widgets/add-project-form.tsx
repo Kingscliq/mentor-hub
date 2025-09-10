@@ -6,8 +6,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { addProjectSchema } from '@/schema/auth';
 import { useFormik } from 'formik';
 import { useAuth } from '@/hooks/auth/useAuthStore';
-import { useAddProject } from '@/hooks/groups/useAddProject';
 import { toast } from 'sonner';
+import { useAddProject } from '@/hooks/projects';
 
 const initialValues: AddProjectFormValues = {
   topic: '',

@@ -12,10 +12,12 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
+
 export interface Response {
   status: string;
   message: string;
 }
+
 
 export const useGetAllGroups = (queryParams: string) => {
   // TODO: separate query functions from their calls
