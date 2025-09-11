@@ -4,6 +4,7 @@ import {
   GroupDataResponse,
   GroupErrorResponse,
   ICreateGroupPayload,
+  singleGroupDetail,
 } from '@/types/features/groups';
 import {
   useMutation,
@@ -12,12 +13,10 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-
 export interface Response {
   status: string;
   message: string;
 }
-
 
 export const useGetAllGroups = (queryParams: string) => {
   // TODO: separate query functions from their calls
@@ -35,6 +34,25 @@ export const useGetAllGroups = (queryParams: string) => {
     staleTime: 3000, //time it takes before the data becomes stale
   });
   return getAllGroups;
+};
+
+export const useGetSingleGroup = (id: string) => {
+  // TODO: separate query functions from their calls
+  const getSingleGroup = useQuery<singleGroupDetail, AxiosError>({
+    queryKey: ['group-details', id],
+    queryFn: async () => {
+      try {
+        const response = await client.get(`${urls.GROUPS}/${id}`);
+
+        return response?.data?.data?.group;
+      } catch (error) {
+        throw error;
+      }
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 3000,
+  });
+  return getSingleGroup;
 };
 
 export const useCreateGroup = (): UseMutationResult<
