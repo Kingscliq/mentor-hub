@@ -49,6 +49,23 @@ export interface GroupDataResponse {
   groups: IGroupsList[];
 }
 
+export interface singleGroupUser {
+  firstName: string;
+  lastName: string;
+  matricNumber: string;
+  _id: string;
+  role: string;
+  department: string;
+  phoneNumber: string;
+  email: string;
+}
+export interface singleGroupDetail {
+  users: singleGroupUser[];
+  name: string;
+  id: string;
+  maximumGroupSize: number;
+  supervisor: string[];
+}
 export interface IGroupsList {
   users: string[];
   _id: string;
