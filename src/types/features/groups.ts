@@ -1,4 +1,4 @@
-import { ResponseStatus } from '@/types/features/auth';
+import { ResponseStatus, User } from '@/types/features/auth';
 import { StaticImageData } from 'next/image';
 
 // export interface GroupModulesI {}
@@ -49,7 +49,7 @@ export interface GroupDataResponse {
   groups: IGroupsList[];
 }
 
-export interface singleGroupUser {
+export interface SingleGroupUser {
   firstName: string;
   lastName: string;
   matricNumber: string;
@@ -60,11 +60,11 @@ export interface singleGroupUser {
   email: string;
 }
 export interface singleGroupDetail {
-  users: singleGroupUser[];
+  users: SingleGroupUser[];
   name: string;
   id: string;
   maximumGroupSize: number;
-  supervisor: string[];
+  supervisor: User;
 }
 export interface IGroupsList {
   users: string[];

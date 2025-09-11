@@ -62,6 +62,7 @@ const AddUser: React.FC<IAddUserProps> = ({ open, onClose }) => {
     onSuccess: () => {
       toast.success('User added successfully!');
       queryClient.invalidateQueries({ queryKey: ['group-members', id] });
+      queryClient.invalidateQueries({ queryKey: ['group-details', id] });
       onClose?.();
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
