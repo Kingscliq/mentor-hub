@@ -12,9 +12,9 @@ import { useGetSingleGroup } from '../api';
 import { useParams } from 'next/navigation';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-const AdminGroupDetails = () => {
+const AdminGroupDetails = ({ params }: { params: string }) => {
   const [open, setOpen] = useState<boolean>(false);
-
+  console.log(params);
   const { id } = useParams();
   const { data: singleGroup } = useGetSingleGroup(String(id));
 
@@ -72,9 +72,7 @@ const AdminGroupDetails = () => {
                     <p>To assign a supervisor:</p>
                     <ul className="list-inside list-disc text-sm">
                       <li>Click the &quot;Add User&quot; button.</li>
-                      <li>
-                        Select &quot;Supervisor&quot; from the options.
-                      </li>
+                      <li>Select &quot;Supervisor&quot; from the options.</li>
                       <li>Choose the user you want to assign from the list.</li>
                       <li>
                         Click &quot;Save User&quot; to assign the supervisor.
